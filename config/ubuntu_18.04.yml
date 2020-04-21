@@ -1,0 +1,127 @@
+#
+# config.yml
+#
+# After completing the following setting, run:
+#
+#   ./proviscript.sh install
+#
+
+install:
+    - nginx
+    - php
+    - mariadb
+    - redis
+  
+config:
+    #--------------------------------#
+    # Apache server                  #
+    #---------+----------------------#
+    # version | latest: 2.4.33       #
+    #         | system: 2.4.18       #
+    #---------+----------------------#
+    apache:
+        name: apache
+        version: latest
+    #--------------------------------#
+    # Nginx                          #
+    #---------+----------------------#
+    # version | latest: 1.14         #
+    #         | mainline: 1.13.12    #
+    #         | system: 1.10.3       #
+    #---------+----------------------#
+    nginx:
+        name: nginx
+        version: latest
+    #--------------------------------#
+    # PHP-FPM                        #
+    #---------+----------------------#
+    # version | 7.2, 7.1, 7.0, 5.6   #
+    # modules | see list             #
+    #---------+----------------------#
+    php:
+        name: "php-fpm"
+        version: 7.2
+        modules:
+            - bcmath
+            - bz2
+            - cgi
+            - cli
+            - common
+            - curl
+            - dba
+            - dev
+            - enchant
+            - gd
+            - gmp
+            - imap
+            - interbase
+            - intl
+            - json
+            - ldap
+            - mbstring
+            - mysql
+            - odbc
+            - opcache
+            - pgsql
+            - phpdbg
+            - pspell
+            - readline
+            - recode
+            - redis
+            - snmp
+            - soap
+            - sqlite3
+            - sybase
+            - tidy
+            - xml
+            - xmlrpc
+            - xsl
+            - zip
+    #--------------------------------#
+    # Redis                          #
+    #---------+----------------------#
+    # version | latest: 4.0.9        #
+    #         | system: 3.0.6        #
+    #---------+----------------------#
+    redis:
+        name: redis
+        version: latest
+    #---------------------------------#
+    # MariaDB                         #
+    #-----------------+---------------#
+    # version         | latest: 10.2  #
+    #                 | system: 10.0  #
+    # password        | *             #
+    # secure          | y, n          #
+    # remote          | y, n          #
+    # remote_user     | *             #
+    # remote_password | *             #
+    #-----------------+---------------#
+    mariadb:
+        name: mariadb
+        version: latest
+        password: 12345678
+        secure: y
+        remote: y
+        remote_user: test_user
+        remote_password: 12345678
+    #---------------------------------#
+    # MySQL                           #
+    #-----------------+---------------#
+    # version         | latest: 8.0   #
+    #                 | system: 5.7   #
+    # password        | *             #
+    # secure          | y, n          #
+    # remote          | y, n          #
+    # remote_user     | *             #
+    # remote_password | *             #
+    #-----------------+---------------#
+    mysql:
+        name: mysql
+        version: latest
+        password: 12345678
+        secure: y
+        remote: y
+        remote_user: test_user
+        remote_password: 12345678
+

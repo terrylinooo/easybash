@@ -1,0 +1,31 @@
+.DS_Store
+
+#----------------------------------------#
+# IDE Files                              #
+#----------------------------------------#
+/nbproject/
+.idea/*
+
+#----------------------------------------#
+# Sublime Text cache files               #
+#----------------------------------------#
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
+
+#----------------------------------------#
+# Visual Studio Code                     #
+#----------------------------------------#
+.vscode/
+.vscode/*
+
+#----------------------------------------#
+# Test                                   #
+#----------------------------------------#
+/test/
+
+!.gitignore
