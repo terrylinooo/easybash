@@ -201,7 +201,7 @@ if [ "${package_version}" == "latest" ]; then
 
     # Check if apt-transport-https command is available to use or not.
     if [ "${is_apt_transport_https}" != "installed" ]; then
-        func::easybash_msg warning "Command \"apt-transport-https\" is not supprted, install \"apt-transport-https\" to use it."
+        func::easybash_msg warning "Command \"apt-transport-https\" is not supported, install \"apt-transport-https\" to use it."
         func::easybash_msg info "Proceeding to install \"apt-transport-https\"."
         sudo ${_PM} install -y apt-transport-https
     fi

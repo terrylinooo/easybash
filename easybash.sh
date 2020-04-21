@@ -5,13 +5,15 @@
 #-
 #- SYNOPSIS
 #-
-#-    easybash.sh [-h] [-i] install
+#-    easybash.sh [-h] [-i] [install] [init]
 #-
 #- OPTIONS
 #-
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    -p, --print-config   Print config variables, for debug
+#-    init                 Delete current OS verison and copy config.yml
+#-    install              Start installing process.
 #-
 #+
 #+ IMPLEMENTATION:
@@ -21,6 +23,10 @@
 #+    license    MIT
 #+    authors    Terry Lin (terrylinooo)
 #+
+#==============================================================================
+
+#==============================================================================
+# Part 1. Config
 #==============================================================================
 
 export EASYBASH=main
@@ -34,6 +40,24 @@ _PROVI=false
 readonly OS_NAME="$(func::os_name)"
 readonly OS_RELEASE_NUMBER="$(func::os_release_number)"
 readonly OS_DIST="${OS_NAME}/${OS_RELEASE_NUMBER}"
+
+#==============================================================================
+# Part 2. Option (DO NOT MODIFY)
+#==============================================================================
+
+# Print script help
+show_script_help() {
+    echo 
+    head -50 ${0} | grep -e "^#[-|>]" | sed -e "s/^#[-|>]*/ /g"
+    echo 
+}
+
+# Print script info
+show_script_information() {
+    echo 
+    head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
+    echo 
+}
 
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
@@ -75,8 +99,17 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
+#==============================================================================
+# Part 3. Message (DO NOT MODIFY)
+#==============================================================================
+
+func::easybash_welcome
+
+#==============================================================================
+# Part 4. Core
+#==============================================================================
+
 if [ "${_INIT}" == "true" ]; then
-    func::easybash_welcome
     func::easybash_msg info "Copy ${OS_DIST,,}/config.yml to current folder..."
     sudo cp ${OS_DIST,,}/config.yml config.yml
 
@@ -103,9 +136,6 @@ if [ "${_PROVI}" == "true" ]; then
             exit 1
         ;;
     esac
-
-    # Show welcome message
-    func::easybash_welcome
 
     # Install component packages
     for component in ${install[@]}; do

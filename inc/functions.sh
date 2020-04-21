@@ -5,7 +5,7 @@
 #
 # Global Functions in Easybash project
 #
-# Package  EasyBash
+# Package  Easybash
 # Author   Terry Lin
 # Link     https://github.com/terrylinooo/easybash
 # License  MIT
@@ -43,21 +43,22 @@ func::easybash_msg() {
     esac
 }
 
+
+
 func::easybash_welcome() {
     clear
     echo
     echo
-    echo -e " ${COLOR_GREEN} ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗${COLOR_BLUE}███████╗ ██████╗██████╗ ██╗██████╗ ████████╗${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN} ██╔══██╗██╔══██╗██╔═══██╗██║   ██║██║${COLOR_BLUE}██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN} ██████╔╝██████╔╝██║   ██║██║   ██║██║${COLOR_BLUE}███████╗██║     ██████╔╝██║██████╔╝   ██║   ${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN} ██╔═══╝ ██╔══██╗██║   ██║╚██╗ ██╔╝██║${COLOR_BLUE}╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   ${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN} ██║     ██║  ██║╚██████╔╝ ╚████╔╝ ██║${COLOR_BLUE}███████║╚██████╗██║  ██║██║██║        ██║   ${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN} ╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝${COLOR_BLUE}╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ${COLOR_EOF}"
-    echo "                                                           "
-    echo "                             https://easybash.github.io    "
-    echo "                                                           "
-    echo "                             Provisioning Shell Scripts    "
+    echo -e " ${COLOR_GREEN} ███████╗  █████╗  ███████╗ ██╗   ██╗ ${COLOR_BLUE}██████╗   █████╗  ███████╗ ██╗  ██╗${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██╔════╝ ██╔══██╗ ██╔════╝ ╚██╗ ██╔╝ ${COLOR_BLUE}██╔══██╗ ██╔══██╗ ██╔════╝ ██║  ██║${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} █████╗   ███████║ ███████╗  ╚████╔╝  ${COLOR_BLUE}██████╔╝ ███████║ ███████╗ ███████║${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██╔══╝   ██╔══██║ ╚════██║   ╚██╔╝   ${COLOR_BLUE}██╔══██╗ ██╔══██║ ╚════██║ ██╔══██║${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ███████╗ ██║  ██║ ███████║    ██║    ${COLOR_BLUE}██████╔╝ ██║  ██║ ███████║ ██║  ██║${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ╚══════╝ ╚═╝  ╚═╝ ╚══════╝    ╚═╝    ${COLOR_BLUE}╚═════╝  ╚═╝  ╚═╝ ╚══════╝ ╚═╝  ╚═╝${COLOR_EOF}"
     echo
+    echo "    https://github.com/terrylinooo/easybash    "
+    echo
+    echo -e "   ${COLOR_BG_BLUE} bash ./easybash.sh -h${COLOR_EOF}${COLOR_DARK}  (Help)${COLOR_EOF} "
     echo
 }
 
@@ -68,7 +69,7 @@ func::easybash_thanks() {
     echo
     echo -e " ${COLOR_RED}  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  ${COLOR_EOF} "
     echo -e " ${COLOR_RED} ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'  ${COLOR_EOF} "
-    echo -e ${COLOR_RED} '  `.(    `.(    `.(    `.(    `.(    `.(  ' ${COLOR_EOF}
+    echo -e ${COLOR_RED} '  `.(    `.(    `.(    `.(    `.(    `.('   ${COLOR_EOF}
     echo -e " ${COLOR_RED}                                            ${COLOR_EOF} "
     echo -e " ${COLOR_WHITE}Thanks for using Easybash!                ${COLOR_EOF} "
     echo -e "                                                                      "

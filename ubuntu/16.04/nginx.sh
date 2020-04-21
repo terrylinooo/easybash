@@ -209,7 +209,7 @@ if [ "${version_code}" != "system" ]; then
 
     # Check if add-apt-repository command is available to use or not.
     if [ "${is_add_apt_repository}" == "" ]; then
-        func::easybash_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
         func::easybash_msg info "Proceeding to install \"software-properties-common\"."
         sudo ${_PM} install -y software-properties-common
     fi
