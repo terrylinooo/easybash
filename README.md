@@ -1,15 +1,31 @@
-# ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) EasyBash for Ubuntu
+# ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easybash for Ubuntu
 
-EasyBash is to do fully automatic installations of most popular packages to their latest version for Ubuntu servers.
+Easybash is to do fully automatic installations of most popular packages to their latest version for Ubuntu servers.
+
+Easybash has been tested and can use on the following LTS versions.
+
+- Ubuntu 14.04 (Trusty Tahr)
+- Ubuntu 16.04 (Xenial Xerus)
+- Ubuntu 18.04 (Bionic Beaver)
+- Ubuntu 20.04 (Focal Fossa)
 
 ## :link: [Website](https://easybash.github.io/) :link:
 
+---
+
 ## Supported Packages
 
-| OS Version | Package |
-| --- | --- |
-| Ubuntu 16.04<br>Ubuntu 18.04 | Apache<br>MairaDB<br>MySQL<br>Nginx<br>PHP-FPM<br>Redis<br>Golang<br>Node.js<br>Dart<br> |
-
+| Package | Category | 14.04 | 16.04 | 18.04 | 20.04 |
+| --- | --- | --- | --- | --- | --- |
+| MairaDB | Database | - | - | - | - |
+| MySQL | Database | - | - | - | - |
+| Redis | Database | - | - | - | - |
+| Apache | Web Server | - | - | 2.4.29 | - |
+| Nginx | Web Server | - | - | - | - |
+| PHP-FPM | Language | - | - | - | - |
+| Golang | Language | - | - | - | - |
+| Node.js  |Language | - | - | - | - |
+| Dart | Language | - | - | - | - |
 
 ## How to Use
 
