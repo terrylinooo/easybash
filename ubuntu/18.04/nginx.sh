@@ -130,18 +130,18 @@ else
     func::easybash_msg() {
         case "$1" in
             "info")
-                echo -e "[${COLOR_BLUE}###${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_BLUE}Easybash${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
             ;;
             "warning")
-                echo -e "[${COLOR_RED}###${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_RED}Easybash${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
             ;;
             "success")
-                echo -e "[${COLOR_GREEN}###${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_GREEN}Easybash${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
             ;;
         esac
     }
 
-    spaces=$(printf "%-80s" "*")
+    spaces=$(printf "%-80s" " ")
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
@@ -164,7 +164,7 @@ fi
 echo
 echo " @os:      ${os_name} ${os_version} "
 echo " @package: ${package_name}          "
-echo " @version: ${package_version}       "
+echo " @branch:  ${package_version}       "
 echo
 
 #==============================================================================

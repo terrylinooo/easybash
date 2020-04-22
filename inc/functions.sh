@@ -32,13 +32,13 @@ readonly COLOR_BG_DARK="\e[100m"
 func::easybash_msg() {
     case "$1" in
         "info")
-            echo -e "${COLOR_BLUE}###${COLOR_EOF} ${COLOR_BLUE}${2}${COLOR_EOF}"
+            echo -e "${COLOR_BLUE}Easybash${COLOR_EOF} ${COLOR_BLUE}${2}${COLOR_EOF}"
         ;;
         "warning")
-            echo -e "${COLOR_RED}###${COLOR_EOF} ${COLOR_RED}${2}${COLOR_EOF}"
+            echo -e "${COLOR_RED}Easybash${COLOR_EOF} ${COLOR_RED}${2}${COLOR_EOF}"
         ;;
         "success")
-            echo -e "${COLOR_GREEN}###${COLOR_EOF} ${COLOR_GREEN}${2}${COLOR_EOF}"
+            echo -e "${COLOR_GREEN}Easybash${COLOR_EOF} ${COLOR_GREEN}${2}${COLOR_EOF}"
         ;;
     esac
 }
@@ -63,13 +63,13 @@ func::easybash_welcome() {
 }
 
 func::easybash_thanks() {
-    spaces=$(printf "%-80s" "*")
+    spaces=$(printf "%-80s" " ")
     echo
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo
     echo -e " ${COLOR_RED}  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  ${COLOR_EOF} "
     echo -e " ${COLOR_RED} ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'  ${COLOR_EOF} "
-    echo -e ${COLOR_RED} '  `.(    `.(    `.(    `.(    `.(    `.('   ${COLOR_EOF}
+    echo -e " ${COLOR_RED}"' `.(    `.(    `.(    `.(    `.(    `.( '"${COLOR_EOF} "
     echo -e " ${COLOR_RED}                                            ${COLOR_EOF} "
     echo -e " ${COLOR_WHITE}Thanks for using Easybash!                ${COLOR_EOF} "
     echo -e "                                                                      "
@@ -89,7 +89,7 @@ func::component_welcome() {
     echo
     echo
     echo " Prepare to install.."
-    spaces=$(printf "%-80s" "*")
+    spaces=$(printf "%-80s" " ")
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}

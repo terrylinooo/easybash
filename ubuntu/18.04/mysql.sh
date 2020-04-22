@@ -166,7 +166,7 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-# Not loaded by proviscript.sh, and mysql_root_password not set.
+# Not loaded by easybash.sh, and mysql_root_password not set.
 if [ -z "${mysql_root_password+x}" ]; then
     mysql_root_password="proviscript"
 fi
@@ -215,18 +215,18 @@ else
     func::easybash_msg() {
         case "$1" in
             "info")
-                echo -e "[${COLOR_BLUE}###${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_BLUE}Easybash${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
             ;;
             "warning")
-                echo -e "[${COLOR_RED}###${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_RED}Easybash${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
             ;;
             "success")
-                echo -e "[${COLOR_GREEN}###${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_GREEN}Easybash${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
             ;;
         esac
     }
 
-    spaces=$(printf "%-80s" "*")
+    spaces=$(printf "%-80s" " ")
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
@@ -249,7 +249,7 @@ fi
 echo
 echo " @os:      ${os_name} ${os_version} "
 echo " @package: ${package_name}          "
-echo " @version: ${package_version}       "
+echo " @branch:  ${package_version}       "
 echo
 
 #==============================================================================
@@ -295,9 +295,9 @@ if [ "${package_version}" == "latest" ]; then
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/tools-component string mysql-tools"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/dmr-warning note"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/preview-component string"
-    wget https://dev.mysql.com/get/mysql-apt-config_0.8.9-1_all.deb
-    sudo -E dpkg -i mysql-apt-config_0.8.9-1_all.deb
-    rm mysql-apt-config_0.8.9-1_all.deb
+    wget https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+    sudo -E dpkg -i mysql-apt-config_0.8.15-1_all.deb
+    rm mysql-apt-config_0.8.15-1_all.deb
 
     # Update repository for MySQL. 
     sudo ${_PM} update

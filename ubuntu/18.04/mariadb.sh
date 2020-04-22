@@ -166,7 +166,7 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-# Not loaded by proviscript.sh, and mysql_root_password not set.
+# Not loaded by easybash.sh, and mysql_root_password not set.
 if [ -z "${mysql_root_password+x}" ]; then
     mysql_root_password="proviscript"
 fi
@@ -215,18 +215,18 @@ else
     func::easybash_msg() {
         case "$1" in
             "info")
-                echo -e "[${COLOR_BLUE}###${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_BLUE}Easybash${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
             ;;
             "warning")
-                echo -e "[${COLOR_RED}###${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_RED}Easybash${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
             ;;
             "success")
-                echo -e "[${COLOR_GREEN}###${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_GREEN}Easybash${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
             ;;
         esac
     }
 
-    spaces=$(printf "%-80s" "*")
+    spaces=$(printf "%-80s" " ")
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
@@ -248,7 +248,7 @@ fi
 echo
 echo " @os:      ${os_name} ${os_version} "
 echo " @package: ${package_name}          "
-echo " @version: ${package_version}       "
+echo " @branch:  ${package_version}       "
 echo
 
 #==============================================================================
@@ -277,14 +277,17 @@ if [ "${is_mariadb_installed}" == "install ok installed" ]; then
     exit 2
 fi
 
-# Add repository for Nginx.
+# Add repository for MariaDB
 if [ "${package_version}" == "latest" ]; then
-    version_code="10.3"
-else
+    version_code="10.4"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code="10.5"
+elif [ "${package_version}" == "system" ]; then
     version_code="10.0"
 fi
 
-if [ "${package_version}" == "latest" ]; then
+
+if [[ "${package_version}" == "latest" || "${package_version}" == "mainline" ]]; then
     # Check if software-properties-common installed or not.
     is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 

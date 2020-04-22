@@ -1,26 +1,26 @@
-# ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easybash for Ubuntu
+# ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easy bash for Ubuntu
 
-Easybash is to do fully automatic installations of most popular packages to their latest version for Ubuntu servers.
+Easybash is to do fully automatic installations of most popular packages to their latest version on Ubuntu servers.
 
 Easybash has been tested and can use on the following LTS versions.
 
 - Ubuntu 16.04 (Xenial Xerus)
 - Ubuntu 18.04 (Bionic Beaver)
-- Ubuntu 20.04 (Focal Fossa)
+- Ubuntu 20.04 (Focal Fossa) - ongoing
 
 ## :link: [Website](https://easybash.github.io/) :link:
 
 ---
 
-## Supported Packages
+## Packages
 
 | Package | Category |
-| --- | --- | --- |
+| --- | --- |
 | MairaDB | database |
 | MySQL | database |
 | Redis | database |
-| Apache | http server |
-| Nginx | http server |
+| Apache | web server |
+| Nginx | web server |
 | PHP-FPM | programming language |
 | Golang | programming language |
 | Node.js  | programming language |

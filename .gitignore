@@ -31,13 +31,16 @@
 #----------------------------------------#
 # Vagrant VM                             #
 #----------------------------------------#
-/ubuntu/14.04/*.log
 /ubuntu/16.04/*.log
 /ubuntu/18.04/*.log
 /ubuntu/20.04/*.log
-/ubuntu/14.04/.vagrant/
 /ubuntu/16.04/.vagrant/
 /ubuntu/18.04/.vagrant/
 /ubuntu/20.04/.vagrant/
+/ubuntu/16.04/Vagrantfile
+/ubuntu/18.04/Vagrantfile
+/ubuntu/20.04/Vagrantfile
+
+config.yml
 
 !.gitignore

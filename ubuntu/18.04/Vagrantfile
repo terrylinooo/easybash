@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
   config.vm.network "private_network", ip: "192.168.95.18"
   config.vm.boot_timeout = 600
+  config.vm.synced_folder "../../../easybash", "/data"
   config.vm.provider "virtualbox" do |vb|
    vb.memory = "1024"
 	 vb.name = "test_ubuntu_bionic64"
