@@ -4,7 +4,6 @@ Easybash is to do fully automatic installations of most popular packages to thei
 
 Easybash has been tested and can use on the following LTS versions.
 
-- Ubuntu 14.04 (Trusty Tahr)
 - Ubuntu 16.04 (Xenial Xerus)
 - Ubuntu 18.04 (Bionic Beaver)
 - Ubuntu 20.04 (Focal Fossa)
@@ -15,17 +14,17 @@ Easybash has been tested and can use on the following LTS versions.
 
 ## Supported Packages
 
-| Package | Category | 14.04 | 16.04 | 18.04 | 20.04 |
-| --- | --- | --- | --- | --- | --- |
-| MairaDB | Database | - | - | - | - |
-| MySQL | Database | - | - | - | - |
-| Redis | Database | - | - | - | - |
-| Apache | Web Server | - | - | 2.4.29 | - |
-| Nginx | Web Server | - | - | - | - |
-| PHP-FPM | Language | - | - | - | - |
-| Golang | Language | - | - | - | - |
-| Node.js  |Language | - | - | - | - |
-| Dart | Language | - | - | - | - |
+| Package | Category |
+| --- | --- | --- |
+| MairaDB | database |
+| MySQL | database |
+| Redis | database |
+| Apache | http server |
+| Nginx | http server |
+| PHP-FPM | programming language |
+| Golang | programming language |
+| Node.js  | programming language |
+| Dart | programming language |
 
 ## How to Use
 

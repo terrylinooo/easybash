@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of PHP-FPM you want to install?
-#-                         Accept vaule: 5.6, 7.0, 7,1, 7.2
+#-                         Accept vaule: 5.6, 7.0, 7,1, 7.2, 7.3, 7.4
 #-    -m ?, --modules=?    Which modules of PHP-FPM you want to install?
 #-                         Accept vaule: A comma-separated list of module names.
 #-                         See "./php-fpm.sh --module-list"
@@ -46,8 +46,8 @@ package_name="PHP-FPM"
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
 
-# Only allow 5.6, 7.0, 7,1, 7.2
-package_version="7.2"
+# Only allow 5.6, 7.0, 7,1, 7.2, 7.3, 7.4
+package_version="7.4"
 
 php_modules=(
     "bcmath"    "bz2"         "cgi"          "cli"         "common" 
