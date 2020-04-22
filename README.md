@@ -4,8 +4,8 @@ Easybash is to do fully automatic installations of most popular packages to thei
 
 Easybash has been tested and can use on the following LTS versions.
 
-- Ubuntu 16.04 (Xenial Xerus)
-- Ubuntu 18.04 (Bionic Beaver)
+- [Ubuntu 16.04 (Xenial Xerus)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/16.04)
+- [Ubuntu 18.04 (Bionic Beaver)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/18.04)
 - Ubuntu 20.04 (Focal Fossa) - ongoing
 
 ## :link: [Website](https://easybash.github.io/) :link:
