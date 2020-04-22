@@ -1,6 +1,8 @@
 
 # Ubuntu 18.04 (Bionic Beaver)
 
+You can test them before using on your production server. There is a `Vagrantfile` in this folder allows you to test them quickly in your virtual machine. Make sure to change `config.vm.synced_folder` or comment out this line.
+
 | Package | Shell | Category | `-v system` | `-v lastet` | `-v mainline` | `-v {n}` 
 | --- | --- | --- | --- | --- | --- | --- 
 | Apache | `apache.sh` | Web Server | 2.4.29 | 2.4.43 | x | x |

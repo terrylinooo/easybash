@@ -16,15 +16,15 @@ Easybash has been tested and can use on the following LTS versions.
 
 | Package | Category |
 | --- | --- |
+| Apache | web server |
+| Dart | programming language |
+| Golang | programming language |
 | MairaDB | database |
 | MySQL | database |
-| Redis | database |
-| Apache | web server |
+| Node.js  | programming language |
 | Nginx | web server |
 | PHP-FPM | programming language |
-| Golang | programming language |
-| Node.js  | programming language |
-| Dart | programming language |
+| Redis | database |
 
 ## How to Use
 
