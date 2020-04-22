@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Node.js you want to install?
-#-                         Accept vaule: latest (10.x), stable (8.x), system (8.10.0)
+#-                         Accept vaule: latest (12.x), mainline (14.x), system (8.10.0)
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
@@ -192,16 +192,25 @@ if [ "${is_nodejs_installed}" == "install ok installed" ]; then
     exit 2
 fi
 
+# Add repository for Node.js
 if [ "${package_version}" == "latest" ]; then
-    # Add repository for Node.js 10.x.
-    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    version_code="stable"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code="mainline"
+elif [ "${package_version}" == "system" ]; then
+    version_code="system"
+fi
+
+if [ "${version_code}" == "mainline" ]; then
+    # Add repository for Node.js 14.x.
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     # Update repository for Node.js. 
     sudo ${_PM} update
 fi
 
-if [ "${package_version}" == "stable" ]; then
-    # Add repository for Node.js 8.x.
-    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+if [ "${version_code}" == "stable" ]; then
+    # Add repository for Node.js 12.x.
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     # Update repository for Node.js. 
     sudo ${_PM} update
 fi

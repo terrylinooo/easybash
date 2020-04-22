@@ -327,7 +327,7 @@ Options
  OPTIONS
 
     -v ?, --version=?    Which version of Node.js you want to install?
-                         Accept vaule: latest, stable, system
+                         Accept vaule: latest (stable), mainline, system
     -h, --help           Print this help.
     -i, --info           Print script information.
     --aptitude           Use aptitude instead of apt-get as package manager
