@@ -1,6 +1,6 @@
 # ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easy bash for Ubuntu
 
-Easybash is to do fully automatic installations of most popular packages to their latest version on Ubuntu servers.
+Easybash is to do fully automatic installation of the most popular and useful packages to their **latest version** on Ubuntu servers.
 
 Easybash has been tested and can use on the following LTS versions.
 
@@ -55,7 +55,7 @@ vi config.yml
 ./easybash.sh install
 ```
 
-That's it. Proviscript will install packages which defined in `install` section in `config.yml`
+That's it. Easybash will install packages which defined in `install` section in `config.yml`
 
 ---
 
