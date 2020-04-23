@@ -195,6 +195,7 @@ if [ "${is_nginx_installed}" == "install ok installed" ]; then
 fi
 
 # Add repository for Nginx.
+# http://nginx.org/en/linux_packages.html#Ubuntu
 if [ "${package_version}" == "latest" ]; then
     version_code="stable"
 elif [ "${package_version}" == "mainline" ]; then
@@ -204,17 +205,41 @@ elif [ "${package_version}" == "system" ]; then
 fi
 
 if [ "${version_code}" != "system" ]; then
-    # Check if software-properties-common installed or not.
-    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
-    # Check if add-apt-repository command is available to use or not.
-    if [ "${is_add_apt_repository}" == "" ]; then
-        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
-        func::easybash_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_PM} install -y software-properties-common
+    # Check if required packages has been installed or not. 
+    packages=("curl" "gnupg2" "ca-certificates" "lsb-release")
+
+    for pkg in ${packages[@]}; do
+        func::easybash_msg info "Checking if ${pkg} is installed, if not, proceed to install it."
+        is_pkg_installed=$(dpkg-query -W --showformat='${Status}\n' ${pkg} | grep "install ok installed")
+
+        if [ "${is_pkg_installed}" == "install ok installed" ]; then
+            func::easybash_msg info "${pkg} is installed."
+        else
+            func::easybash_msg info "${pkg} is not installed."
+            func::easybash_msg info "Proceeding to install ${pkg}."
+            sudo ${_PM} install -y ${pkg}
+        fi
+    done
+
+    if [ "${version_code}" == "stable" ]; then
+        func::easybash_msg info "Set up the apt repository for stable nginx packages."
+        echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+            | sudo tee /etc/apt/sources.list.d/nginx.list
     fi
 
-    sudo add-apt-repository --yes ppa:nginx/${version_code}
+    if [ "${version_code}" == "mainline" ]; then
+        func::easybash_msg info "Set up the apt repository for mainline nginx packages."
+        echo "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" \
+            | sudo tee /etc/apt/sources.list.d/nginx.list
+    fi
+
+    func::easybash_msg info "Import an official nginx signing key"
+    curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+
+    # Verify that you now have the proper key:
+    sudo apt-key fingerprint ABF5BD827BD9BF62
+
     # Update repository for Nginx. 
     sudo ${_PM} update
 fi

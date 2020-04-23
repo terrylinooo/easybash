@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 #>                           +-------------+
-#>                           |  apache.sh  |
+#>                           |  nodejs.sh  |
 #>                           +-------------+
 #-
 #- SYNOPSIS
 #-
-#-    apache.sh [-h] [-i] [-v [version]]
+#-    nodejs.sh [-h] [-i] [-v [version]]
 #-
 #- OPTIONS
 #-
-#-    -v ?, --version=?    Which version of Apache you want to install?
-#-                         Accept vaule: latest, system
+#-    -v ?, --version=?    Which version of Node.js you want to install?
+#-                         Accept vaule: latest (12.x), mainline (14.x), system (8.10.0)
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v system
-#-    $ ./apache.sh --version=latest
-#-    $ ./apache.sh
+#-    $ ./nodejs.sh -v system
+#-    $ ./nodejs.sh --version=latest
+#-    $ ./nodejs.sh
 #+
 #+ IMPLEMENTATION:
 #+
@@ -27,7 +27,7 @@
 #+    copyright  https://github.com/terrylinooo/easybash
 #+    license    MIT
 #+    authors    Terry Lin (terrylinooo)
-#+
+#+ 
 #==============================================================================
 
 #==============================================================================
@@ -37,7 +37,7 @@
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="20.04"
-package_name="Apache"
+package_name="Node.js"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
@@ -67,7 +67,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of Apache you want to install?
+            # Which version of Node.js you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -114,7 +114,7 @@ fi
 
 if [ "$(type -t INIT_EASYBASH)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    func::component_welcome "apache" "${package_version}"
+    func::component_welcome "nodejs" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
@@ -145,12 +145,12 @@ else
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "      _                             _              "
-    echo -e "     / \     _ __     __ _    ___  | |__     ___   "
-    echo -e "    / _ \   | '_ \   / _  |  / __| | '_ \   / _ \  "
-    echo -e "   / ___ \  | |_) | | (_| | | (__  | | | | |  __/  "
-    echo -e "  /_/   \_\ | .__/   \__,_|  \___| |_| |_|  \___|  "
-    echo -e "            |_|                                    "
+    echo -e "  _   _               _                _          "
+    echo -e " | \ | |   ___     __| |   ___        (_)  ___    "
+    echo -e " |  \| |  / _ \   / _\` |  / _ \       | | / __|  "
+    echo -e " | |\  | | (_) | | (_| | |  __/  _    | | \__ \   "
+    echo -e " |_| \_|  \___/   \__,_|  \___| (_)  _/ | |___/   "
+    echo -e "                                    |__/          "
     echo -e ${COLOR_EOF}
     echo -e " ${COLOR_GREEN}Easy${COLOR_BLUE}bash${COLOR_EOF} Project"
     echo -e
@@ -181,53 +181,49 @@ if [ "${_PM}" == "aptitude" ]; then
     fi
 fi
 
-# Check if Apache has been installed or not.
-func::easybash_msg info "Checking if apache is installed, if not, proceed to install it."
+# Check if Node.js has been installed or not.
+func::easybash_msg info "Checking if Node.js is installed, if not, proceed to install it."
 
-is_apache_installed=$(dpkg-query -W --showformat='${Status}\n' apache | grep "install ok installed")
+is_nodejs_installed=$(dpkg-query -W --showformat='${Status}\n' nodejs | grep "install ok installed")
 
-if [ "${is_apache_installed}" == "install ok installed" ]; then
+if [ "${is_nodejs_installed}" == "install ok installed" ]; then
     func::easybash_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func::easybash_msg info "Try \"sudo ${_PM} purge apache2\""
+    func::easybash_msg info "Try \"sudo ${_PM} purge nodejs\""
     exit 2
 fi
 
+# Add repository for Node.js
 if [ "${package_version}" == "latest" ]; then
+    version_code="stable"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code="mainline"
+elif [ "${package_version}" == "system" ]; then
+    version_code="system"
+fi
 
-    # Check if software-properties-common installed or not.
-    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
-
-    # Check if add-apt-repository command is available to use or not.
-    if [ "${is_add_apt_repository}" == "" ]; then
-        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
-        func::easybash_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_PM} install -y software-properties-common
-    fi
-
-    # Add repository for Apache.
-    sudo add-apt-repository --yes ppa:ondrej/apache2
-
-    # Update repository for Apache. 
+if [ "${version_code}" == "mainline" ]; then
+    # Add repository for Node.js 14.x.
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    # Update repository for Node.js. 
     sudo ${_PM} update
 fi
 
-# Install Apache
-func::easybash_msg info "Proceeding to install apache server."
-sudo ${_PM} install -y apache2
+if [ "${version_code}" == "stable" ]; then
+    # Add repository for Node.js 12.x.
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    # Update repository for Node.js. 
+    sudo ${_PM} update
+fi
 
-# To enable Apache server in boot.
-func::easybash_msg info "Enable service apache in boot."
-sudo systemctl enable apache2
+# Install Node.js
+func::easybash_msg info "Proceeding to install Node.js."
+sudo ${_PM} install -y nodejs
 
-# To restart Apache service.
-func::easybash_msg info "Restart service apache."
-sudo service apache2 restart
+nodejs_version="$(nodejs -v 2>&1)"
 
-apache_version="$(apache2 -v 2>&1)"
-
-if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
+if [[ "${nodejs_version}" = "v"* && "${nodejs_version}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
-    func::easybash_msg success "$(apache2 -v 2>&1)"
+    func::easybash_msg success "$(nodejs -v 2>&1)"
 else
     func::easybash_msg warning "Installation process is failed."
 fi

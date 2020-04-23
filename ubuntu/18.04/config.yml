@@ -11,15 +11,15 @@
 #
 
 install:
-    - nginx
-    - php
-    - mariadb
-    - redis
 #   - apache
-#   - mysql
-#   - golang
-#   - nodejs
 #   - dart
+#   - golang
+    - mariadb
+#   - mysql
+    - nginx
+#   - nodejs
+    - php
+    - redis
   
 config:
     #--------------------------------#
@@ -31,15 +31,82 @@ config:
     apache:
         name: apache
         version: latest
+    #-----------------------------------#
+    # Dart                              #
+    #-----------------+-----------------#
+    # version         | latest: 2.7.2   #
+    #                 | mainline: 2.9.0 #
+    #-----------------+-----------------#
+    dart:
+        name: dart
+        version: latest
+    #----------------------------------#
+    # Golang                           #
+    #-----------------+----------------#
+    # version         | latest: 1.14.2 #
+    #                 | system: 1.10.4 #
+    #-----------------+----------------#
+    golang:
+        name: golang
+        version: latest
+    #-----------------------------------#
+    # MariaDB                           #
+    #-----------------+-----------------#
+    # version         | latest: 10.4.12 #
+    #                 | system: 10.1.29 #
+    #                 | mainline: 10.5  #
+    # password        | *               #
+    # secure          | y, n            #
+    # remote          | y, n            #
+    # remote_user     | *               #
+    # remote_password | *               #
+    #-----------------+-----------------#
+    mariadb:
+        name: mariadb
+        version: latest
+        password: 12345678
+        secure: y
+        remote: y
+        remote_user: test_user
+        remote_password: 12345678
+    #----------------------------------#
+    # MySQL                            #
+    #-----------------+----------------#
+    # version         | latest: 8.0.19 #
+    #                 | system: 5.7.29 #
+    # password        | *              #
+    # secure          | y, n           #
+    # remote          | y, n           #
+    # remote_user     | *              #
+    # remote_password | *              #
+    #-----------------+----------------#
+    mysql:
+        name: mysql
+        version: latest
+        password: 12345678
+        secure: y
+        remote: y
+        remote_user: test_user
+        remote_password: 12345678
     #--------------------------------#
     # Nginx                          #
     #---------+----------------------#
-    # version | latest: 1.16.1       #
-    #         | mainline: 1.17.3     #
+    # version | latest: 1.18.0       #
+    #         | mainline: 1.17.10    #
     #         | system: 1.14         #
     #---------+----------------------#
     nginx:
         name: nginx
+        version: latest
+    #------------------------------------#
+    # Nodejs                             #
+    #-----------------+------------------#
+    # version         | latest: 12.16.2  #
+    #                 | mainline: 14.0.0 #
+    #                 | system: 8.10.0   #
+    #-----------------+------------------#
+    nodejs:
+        name: nodejs
         version: latest
     #--------------------------------#
     # PHP-FPM                        #
@@ -95,70 +162,4 @@ config:
     redis:
         name: redis
         version: latest
-    #-----------------------------------#
-    # MariaDB                           #
-    #-----------------+-----------------#
-    # version         | latest: 10.4.12 #
-    #                 | system: 10.1.29 #
-    #                 | mainline: 10.5  #
-    # password        | *               #
-    # secure          | y, n            #
-    # remote          | y, n            #
-    # remote_user     | *               #
-    # remote_password | *               #
-    #-----------------+-----------------#
-    mariadb:
-        name: mariadb
-        version: latest
-        password: 12345678
-        secure: y
-        remote: y
-        remote_user: test_user
-        remote_password: 12345678
-    #----------------------------------#
-    # MySQL                            #
-    #-----------------+----------------#
-    # version         | latest: 8.0.19 #
-    #                 | system: 5.7.29 #
-    # password        | *              #
-    # secure          | y, n           #
-    # remote          | y, n           #
-    # remote_user     | *              #
-    # remote_password | *              #
-    #-----------------+----------------#
-    mysql:
-        name: mysql
-        version: latest
-        password: 12345678
-        secure: y
-        remote: y
-        remote_user: test_user
-        remote_password: 12345678
-    #------------------------------------#
-    # Nodejs                             #
-    #-----------------+------------------#
-    # version         | latest: 12.16.2  #
-    #                 | mainline: 14.0.0 #
-    #                 | system: 8.10.0   #
-    #-----------------+------------------#
-    nodejs:
-        name: nodejs
-        version: latest
-    #----------------------------------#
-    # Golang                           #
-    #-----------------+----------------#
-    # version         | latest: 1.14.2 #
-    #                 | system: 1.10.4 #
-    #-----------------+----------------#
-    golang:
-        name: golang
-        version: latest
-    #-----------------------------------#
-    # Dart                              #
-    #-----------------+-----------------#
-    # version         | latest: 2.7.2   #
-    #                 | mainline: 2.9.0 #
-    #-----------------+-----------------#
-    dart:
-        name: dart
-        version: latest
+

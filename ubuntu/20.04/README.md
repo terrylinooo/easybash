@@ -5,12 +5,12 @@ You can test them before using on your production server. There is a `Vagrantfil
 
 | Package | Shell | Category | `-v system` | `-v lastet` | `-v mainline` | `-v {n}` 
 | --- | --- | --- | --- | --- | --- | --- 
-| Apache | `apache.sh` | Web Server | - | - | - | - |
+| Apache | `apache.sh` | Web Server | 2.4.41 | - | - | - |
 | Dart | `dart.sh` | Language | - | - | - | - |
 | Golang | `golang.sh` | Language | - | - | - | - |
 | MairaDB | `mariadb.sh` | Database | - | - | - | - |
 | MySQL | `mysql.sh` | Database | - | - | - | - |
-| Nginx | `nginx.sh` | Web Server | - | - | - | - |
+| Nginx | `nginx.sh` | Web Server | 1.7.10 | - | - | - |
 | Node.js  | `nodejs.sh` | Language | - | - | - | - |
 | PHP-FPM | `php-fpm.sh` | Language | - | - | - | - |
 | Redis | `redis.sh` | Database | - | - | - | - |

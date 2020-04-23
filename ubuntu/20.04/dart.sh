@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
-#>                           +-------------+
-#>                           |  apache.sh  |
-#>                           +-------------+
+#>                           +-----------+
+#>                           |  dart.sh  |
+#>                           +-----------+
 #-
 #- SYNOPSIS
 #-
-#-    apache.sh [-h] [-i] [-v [version]]
+#-    dart.sh [-h] [-i] [-v [version]]
 #-
 #- OPTIONS
 #-
-#-    -v ?, --version=?    Which version of Apache you want to install?
-#-                         Accept vaule: latest, system
+#-    -v ?, --version=?    Which version of Dart you want to install?
+#-                         Accept vaule: latest, mainline 
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v system
-#-    $ ./apache.sh --version=latest
-#-    $ ./apache.sh
+#-    $ ./dart.sh -v latest
+#-    $ ./dart.sh --version=latest
+#-    $ ./dart.sh
 #+
 #+ IMPLEMENTATION:
 #+
@@ -27,7 +27,7 @@
 #+    copyright  https://github.com/terrylinooo/easybash
 #+    license    MIT
 #+    authors    Terry Lin (terrylinooo)
-#+
+#+ 
 #==============================================================================
 
 #==============================================================================
@@ -37,7 +37,7 @@
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="20.04"
-package_name="Apache"
+package_name="Dart"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
@@ -67,7 +67,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of Apache you want to install?
+            # Which version of Redis you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -114,7 +114,7 @@ fi
 
 if [ "$(type -t INIT_EASYBASH)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    func::component_welcome "apache" "${package_version}"
+    func::component_welcome "redis" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
@@ -145,12 +145,12 @@ else
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "      _                             _              "
-    echo -e "     / \     _ __     __ _    ___  | |__     ___   "
-    echo -e "    / _ \   | '_ \   / _  |  / __| | '_ \   / _ \  "
-    echo -e "   / ___ \  | |_) | | (_| | | (__  | | | | |  __/  "
-    echo -e "  /_/   \_\ | .__/   \__,_|  \___| |_| |_|  \___|  "
-    echo -e "            |_|                                    "
+    echo -e "   ____                   _     ";
+    echo -e "  |  _ \    __ _   _ __  | |_   ";
+    echo -e "  | | | |  / _\` | | '__| | __| ";
+    echo -e "  | |_| | | (_| | | |    | |_   ";
+    echo -e "  |____/   \__,_| |_|     \__|  ";
+    echo -e "                                ";
     echo -e ${COLOR_EOF}
     echo -e " ${COLOR_GREEN}Easy${COLOR_BLUE}bash${COLOR_EOF} Project"
     echo -e
@@ -171,6 +171,8 @@ echo
 # Part 4. Core
 #==============================================================================
 
+sudo ${_PM} update
+
 if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
@@ -181,53 +183,58 @@ if [ "${_PM}" == "aptitude" ]; then
     fi
 fi
 
-# Check if Apache has been installed or not.
-func::easybash_msg info "Checking if apache is installed, if not, proceed to install it."
+# Check if Dart has been installed or not.
+func::easybash_msg info "Checking if Dart is installed, if not, proceed to install it."
 
-is_apache_installed=$(dpkg-query -W --showformat='${Status}\n' apache | grep "install ok installed")
+is_dart_installed=$(dpkg-query -W --showformat='${Status}\n' dart | grep "install ok installed")
 
-if [ "${is_apache_installed}" == "install ok installed" ]; then
+if [ "${is_dart_installed}" == "install ok installed" ]; then
     func::easybash_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func::easybash_msg info "Try \"sudo ${_PM} purge apache2\""
+    func::easybash_msg info "Try \"sudo ${_PM} purge dart\""
     exit 2
 fi
 
 if [ "${package_version}" == "latest" ]; then
+    # Check if apt-transport-https installed or not.
+    func::easybash_msg info "Checking if apt-transport-https is installed, if not, proceed to install it."
+    is_apt_transport_https=$(dpkg-query -W --showformat='${Status}\n' apt-transport-https | grep -o "installed")
 
-    # Check if software-properties-common installed or not.
-    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
-
-    # Check if add-apt-repository command is available to use or not.
-    if [ "${is_add_apt_repository}" == "" ]; then
-        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
-        func::easybash_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_PM} install -y software-properties-common
+    # Check if apt-transport-https command is available to use or not.
+    if [ "${is_apt_transport_https}" != "installed" ]; then
+        func::easybash_msg warning "Command \"apt-transport-https\" is not supported, install \"apt-transport-https\" to use it."
+        func::easybash_msg info "Proceeding to install \"apt-transport-https\"."
+        sudo ${_PM} install -y apt-transport-https
     fi
 
-    # Add repository for Apache.
-    sudo add-apt-repository --yes ppa:ondrej/apache2
+    # Add repository for Dart.
+    sudo sh -c "curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -"
+    sudo sh -c "curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list"
 
-    # Update repository for Apache. 
+    # Update repository for Dart. 
     sudo ${_PM} update
+
+elif [ "${package_version}" == "mainline" ]; then
+    # Add repository for Dart.
+    sudo sh -c "curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list"
+
+    # Update repository for Dart. 
+    sudo ${_PM} update
+
+else
+    func::easybash_msg warning "The default system repository does not have Dart supported. please try:"
+    func::easybash_msg warning "./dart.sh -v latest"
+    exit 1
 fi
 
-# Install Apache
-func::easybash_msg info "Proceeding to install apache server."
-sudo ${_PM} install -y apache2
+# Install Dart.
+func::easybash_msg info "Proceeding to install Dart SDK."
+sudo ${_PM} install -y dart
 
-# To enable Apache server in boot.
-func::easybash_msg info "Enable service apache in boot."
-sudo systemctl enable apache2
+dart_version="$(dart --version 2>&1)"
 
-# To restart Apache service.
-func::easybash_msg info "Restart service apache."
-sudo service apache2 restart
-
-apache_version="$(apache2 -v 2>&1)"
-
-if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
+if [[ "${dart_version}" = "Dart VM"* && "${dart_version}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
-    func::easybash_msg success "$(apache2 -v 2>&1)"
+    func::easybash_msg success "$(dart --version 2>&1)"
 else
     func::easybash_msg warning "Installation process is failed."
 fi

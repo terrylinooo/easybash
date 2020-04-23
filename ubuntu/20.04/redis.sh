@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-#>                           +-------------+
-#>                           |  apache.sh  |
-#>                           +-------------+
+#>                           +------------+
+#>                           |  redis.sh  |
+#>                           +------------+
 #-
 #- SYNOPSIS
 #-
-#-    apache.sh [-h] [-i] [-v [version]]
+#-    redis.sh [-h] [-i] [-v [version]]
 #-
 #- OPTIONS
 #-
-#-    -v ?, --version=?    Which version of Apache you want to install?
+#-    -v ?, --version=?    Which version of Redis you want to install?
 #-                         Accept vaule: latest, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
@@ -17,9 +17,9 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v system
-#-    $ ./apache.sh --version=latest
-#-    $ ./apache.sh
+#-    $ ./redis.sh -v latest
+#-    $ ./redis.sh --version=latest
+#-    $ ./redis.sh
 #+
 #+ IMPLEMENTATION:
 #+
@@ -37,7 +37,7 @@
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="20.04"
-package_name="Apache"
+package_name="Redis"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
@@ -67,7 +67,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of Apache you want to install?
+            # Which version of Redis you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -114,7 +114,7 @@ fi
 
 if [ "$(type -t INIT_EASYBASH)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    func::component_welcome "apache" "${package_version}"
+    func::component_welcome "redis" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
@@ -145,12 +145,11 @@ else
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "      _                             _              "
-    echo -e "     / \     _ __     __ _    ___  | |__     ___   "
-    echo -e "    / _ \   | '_ \   / _  |  / __| | '_ \   / _ \  "
-    echo -e "   / ___ \  | |_) | | (_| | | (__  | | | | |  __/  "
-    echo -e "  /_/   \_\ | .__/   \__,_|  \___| |_| |_|  \___|  "
-    echo -e "            |_|                                    "
+    echo -e "  ____               _   _         "      
+    echo -e " |  _ \    ___    __| | (_)  ___   "
+    echo -e " | |_) |  / _ \  / _  | | | / __|  "
+    echo -e " |  _ <  |  __/ | (_| | | | \__ \  "
+    echo -e " |_| \_\  \___|  \__,_| |_| |___/  "
     echo -e ${COLOR_EOF}
     echo -e " ${COLOR_GREEN}Easy${COLOR_BLUE}bash${COLOR_EOF} Project"
     echo -e
@@ -171,6 +170,8 @@ echo
 # Part 4. Core
 #==============================================================================
 
+sudo ${_PM} update
+
 if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
@@ -181,19 +182,18 @@ if [ "${_PM}" == "aptitude" ]; then
     fi
 fi
 
-# Check if Apache has been installed or not.
-func::easybash_msg info "Checking if apache is installed, if not, proceed to install it."
+# Check if Redis has been installed or not.
+func::easybash_msg info "Checking if redis is installed, if not, proceed to install it."
 
-is_apache_installed=$(dpkg-query -W --showformat='${Status}\n' apache | grep "install ok installed")
+is_redis_installed=$(dpkg-query -W --showformat='${Status}\n' redis | grep "install ok installed")
 
-if [ "${is_apache_installed}" == "install ok installed" ]; then
+if [ "${is_redis_installed}" == "install ok installed" ]; then
     func::easybash_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func::easybash_msg info "Try \"sudo ${_PM} purge apache2\""
+    func::easybash_msg info "Try \"sudo ${_PM} purge redis-server\""
     exit 2
 fi
 
 if [ "${package_version}" == "latest" ]; then
-
     # Check if software-properties-common installed or not.
     is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
@@ -204,30 +204,30 @@ if [ "${package_version}" == "latest" ]; then
         sudo ${_PM} install -y software-properties-common
     fi
 
-    # Add repository for Apache.
-    sudo add-apt-repository --yes ppa:ondrej/apache2
+    # Add repository for Redis.
+    sudo add-apt-repository --yes ppa:chris-lea/redis-server
 
-    # Update repository for Apache. 
+    # Update repository for Redis. 
     sudo ${_PM} update
 fi
 
-# Install Apache
-func::easybash_msg info "Proceeding to install apache server."
-sudo ${_PM} install -y apache2
+# Install Redis
+func::easybash_msg info "Proceeding to install redis server."
+sudo ${_PM} install -y redis-server
 
-# To enable Apache server in boot.
-func::easybash_msg info "Enable service apache in boot."
-sudo systemctl enable apache2
+# To enable Redis server in boot.
+func::easybash_msg info "Enable service redis in boot."
+sudo systemctl enable redis-server
 
-# To restart Apache service.
-func::easybash_msg info "Restart service apache."
-sudo service apache2 restart
+# To restart Redis service.
+func::easybash_msg info "Restart service redis."
+sudo service redis-server restart
 
-apache_version="$(apache2 -v 2>&1)"
+redis_version="$(redis-server -v 2>&1)"
 
-if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
+if [[ "${redis_version}" = *"Redis"* && "${redis_version}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
-    func::easybash_msg success "$(apache2 -v 2>&1)"
+    func::easybash_msg success "$(redis-server -v 2>&1)"
 else
     func::easybash_msg warning "Installation process is failed."
 fi

@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
-#>                           +-------------+
-#>                           |  apache.sh  |
-#>                           +-------------+
+#>                           +------------+
+#>                           |  nginx.sh  |   
+#>                           +------------+
 #-
 #- SYNOPSIS
 #-
-#-    apache.sh [-h] [-i] [-v [version]]
+#-    nginx.sh [-h] [-i] [-v [version]]
 #-
 #- OPTIONS
 #-
-#-    -v ?, --version=?    Which version of Apache you want to install?
-#-                         Accept vaule: latest, system
+#-    -v ?, --version=?    Which version of Nginx you want to install?
+#-                         Accept vaule: latest, mainline, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v system
-#-    $ ./apache.sh --version=latest
-#-    $ ./apache.sh
+#-    $ ./nginx.sh -v stable
+#-    $ ./nginx.sh --version=mainline
+#-    $ ./nginx.sh
 #+
 #+ IMPLEMENTATION:
 #+
@@ -27,7 +27,7 @@
 #+    copyright  https://github.com/terrylinooo/easybash
 #+    license    MIT
 #+    authors    Terry Lin (terrylinooo)
-#+
+#+ 
 #==============================================================================
 
 #==============================================================================
@@ -37,7 +37,7 @@
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="20.04"
-package_name="Apache"
+package_name="Nginx"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
@@ -67,7 +67,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of Apache you want to install?
+            # Which version of Nginx you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -112,9 +112,9 @@ fi
 # Part 3. Message (DO NOT MODIFY)
 #==============================================================================
 
-if [ "$(type -t INIT_EASYBASH)" == function ]; then
+if [ "$(type -t INIT_EASYBASH)" == function ]; then 
     package_version=${PACKAGE_VERSION}
-    func::component_welcome "apache" "${package_version}"
+    func::component_welcome "nginx" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
@@ -145,12 +145,12 @@ else
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "      _                             _              "
-    echo -e "     / \     _ __     __ _    ___  | |__     ___   "
-    echo -e "    / _ \   | '_ \   / _  |  / __| | '_ \   / _ \  "
-    echo -e "   / ___ \  | |_) | | (_| | | (__  | | | | |  __/  "
-    echo -e "  /_/   \_\ | .__/   \__,_|  \___| |_| |_|  \___|  "
-    echo -e "            |_|                                    "
+    echo -e "  _   _           _                  "
+    echo -e " | \ | |   __ _  (_)  _ __   __  __  "
+    echo -e " |  \| |  / _ \  | | | |  \  \ \/ /  "
+    echo -e " | |\  | | (_| | | | | | | |  >  <   "
+    echo -e " |_| \_|  \__, | |_| |_| |_| /_/\_\  "
+    echo -e "          |___/                      "
     echo -e ${COLOR_EOF}
     echo -e " ${COLOR_GREEN}Easy${COLOR_BLUE}bash${COLOR_EOF} Project"
     echo -e
@@ -171,6 +171,8 @@ echo
 # Part 4. Core
 #==============================================================================
 
+sudo ${_PM} update
+
 if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
@@ -181,53 +183,84 @@ if [ "${_PM}" == "aptitude" ]; then
     fi
 fi
 
-# Check if Apache has been installed or not.
-func::easybash_msg info "Checking if apache is installed, if not, proceed to install it."
+# Check if Nginx has been installed or not.
+func::easybash_msg info "Checking if nginx is installed, if not, proceed to install it."
 
-is_apache_installed=$(dpkg-query -W --showformat='${Status}\n' apache | grep "install ok installed")
+is_nginx_installed=$(dpkg-query -W --showformat='${Status}\n' nginx | grep "install ok installed")
 
-if [ "${is_apache_installed}" == "install ok installed" ]; then
+if [ "${is_nginx_installed}" == "install ok installed" ]; then
     func::easybash_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func::easybash_msg info "Try \"sudo ${_PM} purge apache2\""
+    func::easybash_msg info "Try \"sudo ${_PM} purge nginx\""
     exit 2
 fi
 
+# Add repository for Nginx.
+# http://nginx.org/en/linux_packages.html#Ubuntu
 if [ "${package_version}" == "latest" ]; then
+    version_code="stable"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code="mainline"
+elif [ "${package_version}" == "system" ]; then
+    version_code="system"
+fi
 
-    # Check if software-properties-common installed or not.
-    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
+if [ "${version_code}" != "system" ]; then
 
-    # Check if add-apt-repository command is available to use or not.
-    if [ "${is_add_apt_repository}" == "" ]; then
-        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
-        func::easybash_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_PM} install -y software-properties-common
+    # Check if required packages has been installed or not. 
+    packages=("curl" "gnupg2" "ca-certificates" "lsb-release")
+
+    for pkg in ${packages[@]}; do
+        func::easybash_msg info "Checking if ${pkg} is installed, if not, proceed to install it."
+        is_pkg_installed=$(dpkg-query -W --showformat='${Status}\n' ${pkg} | grep "install ok installed")
+
+        if [ "${is_pkg_installed}" == "install ok installed" ]; then
+            func::easybash_msg info "${pkg} is installed."
+        else
+            func::easybash_msg info "${pkg} is not installed."
+            func::easybash_msg info "Proceeding to install ${pkg}."
+            sudo ${_PM} install -y ${pkg}
+        fi
+    done
+
+    if [ "${version_code}" == "stable" ]; then
+        func::easybash_msg info "Set up the apt repository for stable nginx packages."
+        echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+            | sudo tee /etc/apt/sources.list.d/nginx.list
     fi
 
-    # Add repository for Apache.
-    sudo add-apt-repository --yes ppa:ondrej/apache2
+    if [ "${version_code}" == "mainline" ]; then
+        func::easybash_msg info "Set up the apt repository for mainline nginx packages."
+        echo "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" \
+            | sudo tee /etc/apt/sources.list.d/nginx.list
+    fi
 
-    # Update repository for Apache. 
+    func::easybash_msg info "Import an official nginx signing key"
+    curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+
+    # Verify that you now have the proper key:
+    sudo apt-key fingerprint ABF5BD827BD9BF62
+
+    # Update repository for Nginx. 
     sudo ${_PM} update
 fi
 
-# Install Apache
-func::easybash_msg info "Proceeding to install apache server."
-sudo ${_PM} install -y apache2
+# Install Nginx
+func::easybash_msg info "Proceeding to install nginx server."
+sudo ${_PM} install -y nginx
 
-# To enable Apache server in boot.
-func::easybash_msg info "Enable service apache in boot."
-sudo systemctl enable apache2
+# To enable Nginx server in boot.
+func::easybash_msg info "Enable service nginx in boot."
+sudo systemctl enable nginx
 
-# To restart Apache service.
-func::easybash_msg info "Restart service apache."
-sudo service apache2 restart
+# To restart Nginx service.
+func::easybash_msg info "Restart service nginx."
+sudo service nginx restart
 
-apache_version="$(apache2 -v 2>&1)"
+nginx_version="$(nginx -v 2>&1)"
 
-if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
+if [[ "${nginx_version}" = *"nginx"* && "${nginx_version}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
-    func::easybash_msg success "$(apache2 -v 2>&1)"
+    func::easybash_msg success "$(nginx -v 2>&1)"
 else
     func::easybash_msg warning "Installation process is failed."
 fi
