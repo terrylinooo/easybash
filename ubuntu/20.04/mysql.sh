@@ -284,7 +284,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # Add repository for MySQL
 if [ "${package_version}" == "latest" ]; then
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename select xenial"
+    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename select focal"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-distro select ubuntu"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-url string http://repo.mysql.com/apt"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-preview select Disabled"
@@ -371,7 +371,7 @@ sudo service mysql restart
 
 mysql_version="$(mysql -V 2>&1)"
 
-if [[ "${mysql_version}" = *"MySQL"* && "${mysql_version}" != *"command not found"* ]]; then
+if [[ "${mysql_version,,}" = *"mysql"* && "${mysql_version,,}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
     func::easybash_msg success "$(mysql -V 2>&1)"
 else

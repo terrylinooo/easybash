@@ -49,18 +49,18 @@ config:
     golang:
         name: golang
         version: latest
-    #-----------------------------------#
-    # MariaDB                           #
-    #-----------------+-----------------#
-    # version         | latest: 10.4.12 #
-    #                 | system: 10.0.38 #
-    #                 | mainline: 10.5  #
-    # password        | *               #
-    # secure          | y, n            #
-    # remote          | y, n            #
-    # remote_user     | *               #
-    # remote_password | *               #
-    #-----------------+-----------------#
+    #------------------------------------#
+    # MariaDB                            #
+    #-----------------+------------------#
+    # version         | latest: 10.4.12  #
+    #                 | system: 10.0.38  #
+    #                 | mainline: 10.5.2 #
+    # password        | *                #
+    # secure          | y, n             #
+    # remote          | y, n             #
+    # remote_user     | *                #
+    # remote_password | *                #
+    #-----------------+------------------#
     mariadb:
         name: mariadb
         version: latest
