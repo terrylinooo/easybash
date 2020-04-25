@@ -19,6 +19,7 @@ install:
     - nginx
 #   - nodejs
     - php
+#   - postfix
     - redis
   
 config:
