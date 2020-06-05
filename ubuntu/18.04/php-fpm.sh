@@ -211,9 +211,11 @@ case  ${package_version} in
     "7.0") ;;
     "7.1") ;;
     "7.2") ;;
+    "7.3") ;;
+    "7.4") ;;
     *)
-        func::easybash_msg warning "Invalid PHP version: ${package_version} i\s not supported."
-        func::easybash_msg info "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
+        func::easybash_msg warning "Invalid PHP version: ${package_version} is not supported."
+        func::easybash_msg info "Try \"5.6, 7.0, 7.1, 7.2, 7.3, 7.4\" (recommended version: 7.4)."
         exit 1
         ;;
 esac
