@@ -12,7 +12,7 @@
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    -p, --print-config   Print config variables, for debug
-#-    init                 Delete current OS verison and copy config.yml
+#-    init                 Detect current OS verison and copy config.yml
 #-    install              Start installing process.
 #-
 #+
