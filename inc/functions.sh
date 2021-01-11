@@ -67,12 +67,12 @@ func::easybash_thanks() {
     echo
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo
-    echo -e " ${COLOR_RED}  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  ${COLOR_EOF} "
-    echo -e " ${COLOR_RED} ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'  ${COLOR_EOF} "
-    echo -e " ${COLOR_RED}"' `.(    `.(    `.(    `.(    `.(    `.( '"${COLOR_EOF} "
-    echo -e " ${COLOR_RED}                                            ${COLOR_EOF} "
-    echo -e " ${COLOR_WHITE}Thanks for using Easybash!                ${COLOR_EOF} "
-    echo -e "                                                                      "
+    echo -e " ${COLOR_RED}  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.   ${COLOR_EOF}   "
+    echo -e " ${COLOR_RED} ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'   ${COLOR_EOF}   "
+    echo -e " ${COLOR_RED}"'  `.(    `.(    `.(    `.(    `.(    `.( '"${COLOR_EOF}   "
+    echo -e " ${COLOR_RED}                                             ${COLOR_EOF}   "
+    echo -e " ${COLOR_WHITE}Thanks for using Easybash!                 ${COLOR_EOF}   "
+    echo -e "                                                                         "
     echo -e " ${COLOR_GREEN}Star us to let us know you like this script! ${COLOR_EOF} "
     echo -e " https://github.com/terrylinooo/easybash  "
     echo -e "                                          "
