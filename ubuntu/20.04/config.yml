@@ -52,9 +52,9 @@ config:
     #------------------------------------#
     # MariaDB                            #
     #-----------------+------------------#
-    # version         | latest: 10.4.12  #
+    # version         | latest: 10.5.8   #
     #                 | system: 10.3.22  #
-    #                 | mainline: 10.5.2 #
+    #                 | mainline: 10.5.8 #
     # password        | *                #
     # secure          | y, n             #
     # remote          | y, n             #

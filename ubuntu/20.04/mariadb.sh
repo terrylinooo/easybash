@@ -24,8 +24,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-#-    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mariadb.sh -v latest -s y -r y -u test_user -p 12345678
+#-    $ ./mariadb.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+
@@ -279,13 +279,12 @@ fi
 
 # Add repository for MariaDB
 if [ "${package_version}" == "latest" ]; then
-    version_code="10.4"
+    version_code="10.5"
 elif [ "${package_version}" == "mainline" ]; then
     version_code="10.5"
 elif [ "${package_version}" == "system" ]; then
-    version_code="10.0"
+    version_code="10.3"
 fi
-
 
 if [[ "${package_version}" == "latest" || "${package_version}" == "mainline" ]]; then
     # Check if software-properties-common installed or not.
@@ -300,7 +299,7 @@ if [[ "${package_version}" == "latest" || "${package_version}" == "mainline" ]];
 
     # Add repository for MariaDB.
     sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    sudo add-apt-repository --yes "deb [arch=amd64] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${version_code}/ubuntu bionic main"
+    sudo add-apt-repository --yes "deb [arch=amd64] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${version_code}/ubuntu focal main"
     # Update repository for MariaDB. 
     sudo ${_PM} update
 fi
@@ -344,10 +343,13 @@ fi
 # Allow remote access.
 if [ "${mysql_remote}" == "y" ]; then
     # Find 50-server.cnf at first.
+    func::easybash_msg info "Trying to find 50-server.cnf ..."
     cnf_path="$(sudo find /etc/ -name 50-server.cnf 2>&1)"
 
     # If 50-server.cnf not found, find my.cnf
     if [ -z "${cnf_path}" ]; then
+        func::easybash_msg info "50-server.cnf not found."
+        func::easybash_msg info "Trying to find my.cnf ..."
         cnf_path="$(sudo find /etc/ -name my.cnf 2>&1)"
     fi
 

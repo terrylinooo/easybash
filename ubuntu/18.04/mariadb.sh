@@ -24,8 +24,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-#-    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mariadb.sh -v latest -s y -r y -u test_user -p 12345678
+#-    $ ./mariadb.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+
@@ -344,10 +344,13 @@ fi
 # Allow remote access.
 if [ "${mysql_remote}" == "y" ]; then
     # Find 50-server.cnf at first.
+    func::easybash_msg info "Trying to find 50-server.cnf ..."
     cnf_path="$(sudo find /etc/ -name 50-server.cnf 2>&1)"
 
     # If 50-server.cnf not found, find my.cnf
     if [ -z "${cnf_path}" ]; then
+        func::easybash_msg info "50-server.cnf not found."
+        func::easybash_msg info "Trying to find my.cnf ..."
         cnf_path="$(sudo find /etc/ -name my.cnf 2>&1)"
     fi
 
