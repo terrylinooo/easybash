@@ -318,9 +318,13 @@ sudo -E ${_PM} install -y mysql-server
 sudo ${_PM} purge -y debconf-utils
 unset DEBIAN_FRONTEND
 
-# To Enable MariaDB server in boot.
+# Start mysql service in boot.
 func::easybash_msg info "Proceeding to enable service mysql-server in boot."
 sudo systemctl enable mysql
+
+# To restart mysql service.
+func::easybash_msg info "Restart service mysql-server."
+sudo service mysql restart
 
 # As same as secure_mysql_installation.
 # --------------------------------------
@@ -360,14 +364,6 @@ if [ "${mysql_remote}" == "y" ]; then
         FLUSH PRIVILEGES;
 EOF
 fi
-
-# Start mysql service in boot.
-func::easybash_msg info "Proceeding to enable service mysql-server in boot."
-sudo systemctl enable mysql
-
-# To restart mysql service.
-func::easybash_msg info "Restart service mysql-server."
-sudo service mysql restart
 
 mysql_version="$(mysql -V 2>&1)"
 

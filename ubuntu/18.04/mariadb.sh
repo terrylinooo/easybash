@@ -286,7 +286,6 @@ elif [ "${package_version}" == "system" ]; then
     version_code="10.0"
 fi
 
-
 if [[ "${package_version}" == "latest" || "${package_version}" == "mainline" ]]; then
     # Check if software-properties-common installed or not.
     is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
@@ -321,6 +320,10 @@ unset DEBIAN_FRONTEND
 # To Enable MariaDB server in boot.
 func::easybash_msg info "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
+
+# To restart mysql service.
+func::easybash_msg info "Restart service mariadb-server."
+sudo service mariadb restart
 
 # As same as secure_mysql_installation.
 # --------------------------------------
@@ -365,14 +368,6 @@ if [ "${mysql_remote}" == "y" ]; then
         FLUSH PRIVILEGES;
 EOF
 fi
-
-# Start mysql service in boot.
-func::easybash_msg info "Proceeding to enable service mariadb-server in boot."
-sudo systemctl enable mariadb
-
-# To restart mysql service.
-func::easybash_msg info "Restart service mariadb-server."
-sudo service mariadb restart
 
 mysql_version="$(mysql -V 2>&1)"
 

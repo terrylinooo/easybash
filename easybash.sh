@@ -147,12 +147,20 @@ if [ "${_PROVI}" == "true" ]; then
             export PHP_MODULES=${config_php_modules}
         fi
 
-        if [[ "${component_name}" == "mariadb"] || "${component_name}" == "mysql" ]]; then
+        if [ "${component_name}" == "mariadb" ]; then
             export MYSQL_ROOT_PASSWORD=${config_mariadb_password}
             export MYSQL_SECURE=${config_mariadb_secure}
             export MYSQL_REMOTE=${config_mariadb_remote}
             export MYSQL_REMOTE_USER=${config_mariadb_remote_user}
             export MYSQL_REMOTE_PASSWORD=${config_mariadb_remote_password}
+        fi
+
+        if [ "${component_name}" == "mysql" ]; then
+            export MYSQL_ROOT_PASSWORD=${config_mysql_password}
+            export MYSQL_SECURE=${config_mysql_secure}
+            export MYSQL_REMOTE=${config_mysql_remote}
+            export MYSQL_REMOTE_USER=${config_mysql_remote_user}
+            export MYSQL_REMOTE_PASSWORD=${config_mysql_remote_password}
         fi
 
         # Load component script

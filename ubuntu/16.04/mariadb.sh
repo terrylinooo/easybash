@@ -323,6 +323,10 @@ unset DEBIAN_FRONTEND
 func::easybash_msg info "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
 
+# To restart mysql service.
+func::easybash_msg info "Restart service mariadb-server."
+sudo service mariadb restart
+
 # As same as secure_mysql_installation.
 # --------------------------------------
 # 1) Change the root password.
@@ -366,14 +370,6 @@ if [ "${mysql_remote}" == "y" ]; then
         FLUSH PRIVILEGES;
 EOF
 fi
-
-# Start mysql service in boot.
-func::easybash_msg info "Proceeding to enable service mariadb-server in boot."
-sudo systemctl enable mariadb
-
-# To restart mysql service.
-func::easybash_msg info "Restart service mariadb-server."
-sudo service mariadb restart
 
 mysql_version="$(mysql -V 2>&1)"
 
