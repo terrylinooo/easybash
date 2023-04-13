@@ -1,6 +1,16 @@
 # ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easy bash for Ubuntu
 
-Seeking a solution for easy deployment of a new Ubuntu machine with LAMP or LEMP stacks? Here it is.
+![](https://i.imgur.com/GcXUaF4.gif)
+:link: [Video Link](https://i.imgur.com/42dErDQ.mp4) :link:
+
+Seeking a solution for easy deployment of a new Ubuntu machine with **LAMP** or **LEMP** stacks? Here it is.
+
+```
+wget https://easybash.github.io/easybash.tar.gz
+tar -zxvf easybash.tar.gz
+cd easybash-latest
+./easybash.sh
+```
 
 Easybash is a tool for fully automatic installation of the most popular and useful packages to their latest versions on Ubuntu servers.
 
@@ -39,7 +49,6 @@ Easybash also does what the `secure_mysql_installation` shell script does. Pleas
 
 ### Wizard Mode
 
-![](https://i.imgur.com/42dErDQ.gif)
 Wizard mode will ask you several questions to configure settings and then proceed to install the LEMP or LAMP stacks.
 
 #### Download and Run
@@ -49,7 +58,6 @@ tar -zxvf easybash.tar.gz
 cd easybash-latest
 ./easybash.sh
 ```
-
 
 ### Config Mode 
 
