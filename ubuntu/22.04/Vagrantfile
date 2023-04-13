@@ -2,14 +2,15 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/jammy64"
   config.vm.box_check_update = false
-  config.vm.network "private_network", ip: "192.168.16.4"
+  config.vm.network "private_network", ip: "192.168.22.4"
   config.vm.boot_timeout = 600
   config.vm.synced_folder "./", "/easybash_dev"
+  config.ssh.forward_agent = true
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
-    vb.name = "easybash_dev_ubuntu_xenial64"
+    vb.name = "easybash_dev_ubuntu_jammy64"
   end
   config.vm.provision "shell", inline: <<-SHELL
     export LS_COLORS="ow=01;30;104"

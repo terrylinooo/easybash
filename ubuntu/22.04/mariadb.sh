@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-#>                           +------------+
-#>                           |  mysql.sh  |
-#>                           +------------+
+#>                           +--------------+
+#>                           |  mariadb.sh  |   
+#>                           +--------------+
 #-
 #- SYNOPSIS
 #-
-#-    mysql.sh [-h] [-p [password]] [-s [y|n]] [...]
+#-    mariadb.sh [-h] [-p [password]] [-s [y|n]] [...]
 #-
 #- OPTIONS
 #-
@@ -16,7 +16,7 @@
 #-                                  Accept vaule: y, n
 #-    -u ?, --remote-user=?         Remote user.
 #-    -p ?, --remote-password=?     Remote user's password.
-#-    -v ?, --version=?             Which version of MySQL you want to install?
+#-    -v ?, --version=?             Which version of MariaDB you want to install?
 #-                                  Accept vaule: latest, system
 #-    -h, --help                    Print this help.
 #-    -i, --info                    Print script information.
@@ -24,8 +24,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mysql.sh -v latest -s y -r y -u test_user -p 12345678
-#-    $ ./mysql.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
+#-    $ ./mariadb.sh -v latest -s y -r y -u test_user -p 12345678
+#-    $ ./mariadb.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+
@@ -42,8 +42,8 @@
 
 # Display package information, no need to change.
 os_name="Ubuntu"
-os_version="16.04"
-package_name="MySQL"
+os_version="22.04"
+package_name="MariaDB"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="latest"
@@ -121,7 +121,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_remote_password="${1#*=}"; 
                 shift 1
             ;;
-            # Which version of MySQL you want to install?
+            # Which version of MariaDB you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -199,7 +199,7 @@ if [ "$(type -t INIT_EASYBASH)" == function ]; then
     mysql_remote=${MYSQL_REMOTE}
     mysql_remote_user=${MYSQL_REMOTE_USER}
     mysql_remote_password=${MYSQL_REMOTE_PASSWORD}
-    func::component_welcome "mysql" "${package_version}"
+    func::component_welcome "mariadb" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
@@ -230,12 +230,11 @@ else
     echo -e
     echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "  __  __           ____     ___    _      "
-    echo -e " |  \/  |  _   _  / ___|   / _ \  | |     "
-    echo -e " | |\/| | | | | | \___ \  | | | | | |     "
-    echo -e " | |  | | | |_| |  ___) | | |_| | | |___  "
-    echo -e " |_|  |_|  \__, | |____/   \__\_\ |_____| "
-    echo -e "           |___/                          "
+    echo -e "  __  __                  _           ____    ____    "
+    echo -e " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )   "
+    echo -e " | |\/| |  / _  | | '__| | |  / _  | | | | | |  _ \   "
+    echo -e " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |  "
+    echo -e " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/   "
     echo -e ${COLOR_EOF}
     echo -e " ${COLOR_GREEN}Easy${COLOR_BLUE}bash${COLOR_EOF} Project"
     echo -e
@@ -255,7 +254,6 @@ echo
 #==============================================================================
 # Part 4. Core
 #==============================================================================
-
 sudo ${_PM} update
 
 if [ "${_PM}" == "aptitude" ]; then
@@ -267,64 +265,65 @@ if [ "${_PM}" == "aptitude" ]; then
         sudo apt-get install aptitude
     fi
 fi
-# Check if MySQL has been installed or not.
-func::easybash_msg info "Checking if mysql-server is installed, if not, proceed to install it."
 
-is_mysql_installed=$(dpkg-query -W --showformat='${Status}\n' mysql-server | grep "install ok installed")
+# Check if MariaDb has been installed or not.
+func::easybash_msg info "Checking if mariadb-server is installed, if not, proceed to install it."
 
-if [ "${is_mysql_installed}" == "install ok installed" ]; then
+is_mariadb_installed=$(dpkg-query -W --showformat='${Status}\n' mariadb-server | grep "install ok installed")
+
+if [ "${is_mariadb_installed}" == "install ok installed" ]; then
     func::easybash_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func::easybash_msg info "Try \"sudo apt-get purge mysql-server\""
+    func::easybash_msg info "Try \"sudo apt-get purge mariadb-server\""
     exit 2
 fi
 
-# Install debconf-utils for silent installation.
-sudo ${_PM} install -y debconf-utils
-export DEBIAN_FRONTEND="noninteractive"
-
-# Add repository for MySQL
+# Add repository for MariaDB
 if [ "${package_version}" == "latest" ]; then
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename select xenial"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-distro select ubuntu"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-url string http://repo.mysql.com/apt"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-preview select Disabled"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-product select Ok"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-server select mysql-8.0"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-tools select Enabled"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/unsupported-platform select abort"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/tools-component string mysql-tools"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/dmr-warning note"
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/preview-component string"
-    wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
-    sudo -E dpkg -i mysql-apt-config_0.8.24-1_all.deb
-    rm mysql-apt-config_0.8.24-1_all.deb
+    version_code="10.11.2"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code="11.0.1"
+elif [ "${package_version}" == "system" ]; then
+    version_code="10.6.12"
+fi
 
-    # Update repository for MySQL. 
+if [[ "${package_version}" == "latest" || "${package_version}" == "mainline" ]]; then
+    # Check if software-properties-common installed or not.
+    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
+
+    # Check if add-apt-repository command is available to use or not.
+    if [ "${is_add_apt_repository}" == "" ]; then
+        func::easybash_msg warning "Command \"add_apt_repository\" is not supported, install \"software-properties-common\" to use it."
+        func::easybash_msg info "Proceeding to install \"software-properties-common\"."
+        sudo ${_PM} install -y software-properties-common
+    fi
+
+    # Add repository for MariaDB.
+    sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+    sudo add-apt-repository --yes "deb [arch=amd64] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${version_code}/ubuntu jammy main"
+    # Update repository for MariaDB. 
     sudo ${_PM} update
 fi
 
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password ${mysql_root_password}"
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password ${mysql_root_password}"
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass-mismatch error"
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/remove-data-dir boolean false"
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir note"
-sudo debconf-set-selections <<< "mysql-community-server mysql-server/default-auth-override select Use Strong Password Encryption (RECOMMENDED)"
+# Install MariaDB without password prompt.
+sudo ${_PM} install -y debconf-utils
+export DEBIAN_FRONTEND=noninteractive
+sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password password ${mysql_root_password}"
+sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password_again password ${mysql_root_password}"
+sudo ${_PM} purge -y debconf-utils
 
 # Install MariaDB server
-func::easybash_msg info "Proceeding to install mysql-server..."
-sudo -E ${_PM} install -y mysql-server
+func::easybash_msg info "Proceeding to install mariadb-server..."
+sudo -E ${_PM} install -y mariadb-server
 
-# Remove debconf-utils because we don't need it anymore.
-sudo ${_PM} purge -y debconf-utils
 unset DEBIAN_FRONTEND
 
-# Start mysql service in boot.
-func::easybash_msg info "Proceeding to enable service mysql-server in boot."
-sudo systemctl enable mysql
+# To Enable MariaDB server in boot.
+func::easybash_msg info "Proceeding to enable service mariadb-server in boot."
+sudo systemctl enable mariadb
 
 # To restart mysql service.
-func::easybash_msg info "Restart service mysql-server."
-sudo service mysql restart
+func::easybash_msg info "Restart service mariadb-server."
+sudo service mariadb restart
 
 # As same as secure_mysql_installation.
 # --------------------------------------
@@ -332,9 +331,11 @@ sudo service mysql restart
 # 2) Disallow root login remotely.
 # 3) Remove anonymous users.
 # 4) Remove test database and access to it.
+
+# UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
 if [ "${mysql_secure}" == "y" ]; then
     func::easybash_msg info "Proceeding to secure mysql installation..."
-    sudo mysql -uroot -p${mysql_root_password} 2>/dev/null << EOF
+    sudo mysql -uroot -p${mysql_root_password} << EOF
         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
         DELETE FROM mysql.user WHERE User='';
         DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
@@ -345,11 +346,14 @@ fi
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
 if [ "${mysql_remote}" == "y" ]; then
-    # Find mysqld.cnf at first.
-    cnf_path="$(sudo find /etc/ -name mysqld.cnf 2>&1)"
+    # Find 50-server.cnf at first.
+    func::easybash_msg info "Trying to find 50-server.cnf ..."
+    cnf_path="$(sudo find /etc/ -name 50-server.cnf 2>&1)"
 
-    # If mysqld.cnf not found, find my.cnf
+    # If 50-server.cnf not found, find my.cnf
     if [ -z "${cnf_path}" ]; then
+        func::easybash_msg info "50-server.cnf not found."
+        func::easybash_msg info "Trying to find my.cnf ..."
         cnf_path="$(sudo find /etc/ -name my.cnf 2>&1)"
     fi
 
@@ -358,7 +362,7 @@ if [ "${mysql_remote}" == "y" ]; then
 
     func::easybash_msg info "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\"."
     # Setup an user account and access a MySQL server remotely.
-    sudo mysql -uroot -p${mysql_root_password} 2>/dev/null << EOF
+    sudo mysql -uroot -p${mysql_root_password} << EOF
         CREATE USER '${mysql_remote_user}'@'%' IDENTIFIED BY '${mysql_remote_password}';
         GRANT ALL PRIVILEGES ON *.* TO '${mysql_remote_user}'@'%';
         FLUSH PRIVILEGES;
@@ -367,7 +371,7 @@ fi
 
 mysql_version="$(mysql -V 2>&1)"
 
-if [[ "${mysql_version}" = *"MySQL"* && "${mysql_version}" != *"command not found"* ]]; then
+if [[ "${mysql_version}" = *"MariaDB"* && "${mysql_version}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
     func::easybash_msg success "$(mysql -V 2>&1)"
 else

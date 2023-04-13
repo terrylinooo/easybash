@@ -29,13 +29,19 @@
 # Part 1. Config
 #==============================================================================
 
-export EASYBASH=main
-export EASYBASH_DIR=$(dirname $(readlink -f $0))
+readonly EASYBASH=main
+readonly EASYBASH_DIR=$(dirname $(readlink -f $0))
+
+# Load base colors
+source "${EASYBASH_DIR}/inc/colors.sh"
 
 # Load base functions
 source "${EASYBASH_DIR}/inc/functions.sh"
 
-_PROVI=false
+# Load questions
+source "${EASYBASH_DIR}/inc/questions.sh"
+
+_EASYBASH=false
 
 readonly OS_NAME="$(func::os_name)"
 readonly OS_RELEASE_NUMBER="$(func::os_release_number)"
@@ -92,7 +98,7 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             "install")
-                _PROVI=true
+                _EASYBASH=true
                 shift 1
             ;;
         esac
@@ -106,7 +112,107 @@ fi
 func::easybash_welcome
 
 #==============================================================================
-# Part 4. Core
+# Part 4. Questions and Answers
+#==============================================================================
+if [ "${_EASYBASH}" == "false" ]; then
+    # Question 1
+    func::question_installation_mode
+    answer_installation_mode="$(func::answer_installation_mode)"
+
+    # Wizard mode
+    if [ "${answer_installation_mode}" == "1" ]; then
+
+        # Question 2
+        func::question_perderred_stacks
+        answer_perferred_stacks="$(func::answer_perderred_stacks)"
+
+        if [ "${answer_perferred_stacks}" == "1" ]; then
+            readonly STACK_WEB_SERVER="nginx"
+        elif [ "${answer_perferred_stacks}" == "2" ]; then
+            readonly STACK_WEB_SERVER="apache"
+        fi
+
+        # Question 3
+        func::question_perderred_db
+        answer_perferred_db="$(func::answer_perderred_db)"
+
+        if [ "${answer_perferred_db}" == "1" ]; then
+            readonly STACK_DATABASE="mysql"
+        elif [ "${answer_perferred_db}" == "2" ]; then
+            readonly STACK_DATABASE="mariadb"
+        fi
+
+        # Question 4
+        func::question_mysql_secure_installation
+        answer_myql_secure_installation="$(func::answer_mysql_secure_installation)"
+
+        if [ "${answer_myql_secure_installation}" == "1" ]; then
+            readonly MYSQL_SECURE="y"
+        elif [ "${answer_myql_secure_installation}" == "2" ]; then
+            readonly MYSQL_SECURE="n"
+        fi
+
+        # Question 5
+        func::question_mysql_root_password
+        readonly MYSQL_ROOT_PASSWORD="$(func::answer_mysql_root_password)"
+
+        # Question 6
+        func::question_mysql_remote_access
+        answer_mysql_remote_access="$(func::answer_mysql_remote_access)"
+
+        if [ "${answer_mysql_remote_access}" == "1" ]; then
+            readonly MYSQL_REMOTE="y"
+
+            # Question 7
+            func::question_mysql_remote_username
+            readonly MYSQL_REMOTE_USER="$(func::answer_mysql_remote_username)"
+
+            # Question 8
+            func::question_mysql_remote_password
+            readonly MYSQL_REMOTE_PASSWORD="$(func::answer_mysql_remote_password)"
+
+        elif [ "${answer_mysql_remote_access}" == "2" ]; then
+            readonly MYSQL_REMOTE="n"
+        fi
+
+        # Question 9
+        func::question_php_version
+        answer_php_version="$(func::answer_php_version)"
+
+        # Question 10
+        func::question_php_modules
+        readonly PHP_MODULES="$(func::answer_php_modules)"
+
+        # Question 11
+        func::question_confirmation
+        answer_confirmation="$(func::answer_confirmation)"
+        if [ "${answer_confirmation}" == "yes" ]; then
+
+            if [ "${OS_RELEASE_NUMBER}" == "22.04" ]; then
+                func::question_turn_off_restart_dialog
+                answer_turn_off_restart="$(func::answer_turn_off_restart_dialog)"
+                if [ "${answer_turn_off_restart}" == "yes" ]; then
+                    sed -i "s/#\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/g" /etc/needrestart/needrestart.conf
+                    sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+                fi
+            fi
+
+            PACKAGE_VERSION="latest"
+            source "${EASYBASH_DIR}/${OS_DIST,,}/${STACK_WEB_SERVER}.sh"
+            source "${EASYBASH_DIR}/${OS_DIST,,}/${STACK_DATABASE}.sh"
+            PACKAGE_VERSION="${answer_php_version}"
+            source "${EASYBASH_DIR}/${OS_DIST,,}/php-fpm.sh"
+        fi
+
+        func::easybash_thanks
+
+    elif [ "${answer_installation_mode}" == "2" ]; then
+       _INIT=true
+    fi
+fi
+
+#==============================================================================
+# Part 5. Core
 #==============================================================================
 
 if [ "${_INIT}" == "true" ]; then
@@ -125,14 +231,14 @@ if [ "${_INIT}" == "true" ]; then
     exit 2
 fi
 
-if [ "${_PROVI}" == "true" ]; then
+if [ "${_EASYBASH}" == "true" ]; then
     # Load config settings
     eval $(func::parse_yaml config.yml)
 
     case "${OS_NAME}" in
         "Ubuntu") ;;
         *)
-            func::func::easybash_msg warning "Sorry! Easybash currently does't support your OS, please watch us on GitHub for further update."
+            func::func::easybash_msg warning "Sorry! Easybash does support Ubuntu only."
             exit 1
         ;;
     esac
@@ -141,26 +247,26 @@ if [ "${_PROVI}" == "true" ]; then
     for component in ${install[@]}; do
         eval "component_name=(\$config_${component}_name)"
         eval "component_version=(\$config_${component}_version)"
-        export PACKAGE_VERSION=${component_version}
+        readonly PACKAGE_VERSION=${component_version}
 
         if [ "${component_name}" == "php-fpm" ]; then
-            export PHP_MODULES=${config_php_modules}
+            readonly PHP_MODULES=${config_php_modules}
         fi
 
         if [ "${component_name}" == "mariadb" ]; then
-            export MYSQL_ROOT_PASSWORD=${config_mariadb_password}
-            export MYSQL_SECURE=${config_mariadb_secure}
-            export MYSQL_REMOTE=${config_mariadb_remote}
-            export MYSQL_REMOTE_USER=${config_mariadb_remote_user}
-            export MYSQL_REMOTE_PASSWORD=${config_mariadb_remote_password}
+            readonly MYSQL_ROOT_PASSWORD=${config_mariadb_password}
+            readonly MYSQL_SECURE=${config_mariadb_secure}
+            readonly MYSQL_REMOTE=${config_mariadb_remote}
+            readonly MYSQL_REMOTE_USER=${config_mariadb_remote_user}
+            readonly MYSQL_REMOTE_PASSWORD=${config_mariadb_remote_password}
         fi
 
         if [ "${component_name}" == "mysql" ]; then
-            export MYSQL_ROOT_PASSWORD=${config_mysql_password}
-            export MYSQL_SECURE=${config_mysql_secure}
-            export MYSQL_REMOTE=${config_mysql_remote}
-            export MYSQL_REMOTE_USER=${config_mysql_remote_user}
-            export MYSQL_REMOTE_PASSWORD=${config_mysql_remote_password}
+            readonly MYSQL_ROOT_PASSWORD=${config_mysql_password}
+            readonly MYSQL_SECURE=${config_mysql_secure}
+            readonly MYSQL_REMOTE=${config_mysql_remote}
+            readonly MYSQL_REMOTE_USER=${config_mysql_remote_user}
+            readonly MYSQL_REMOTE_PASSWORD=${config_mysql_remote_password}
         fi
 
         # Load component script
@@ -169,7 +275,4 @@ if [ "${_PROVI}" == "true" ]; then
 
     # Show thanks message
     func::easybash_thanks
-
-    unset EASYBASH
-    unset EASYBASH_DIR
 fi

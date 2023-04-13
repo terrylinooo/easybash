@@ -18,17 +18,6 @@ INIT_EASYBASH() {
     echo "" 2>&1
 }
 
-# Bash color set
-readonly COLOR_EOF="\e[0m"
-readonly COLOR_BLUE="\e[34m"
-readonly COLOR_RED="\e[91m"
-readonly COLOR_GREEN="\e[92m"
-readonly COLOR_WHITE="\e[97m"
-readonly COLOR_DARK="\e[90m"
-readonly COLOR_BG_BLUE="\e[44m"
-readonly COLOR_BG_GREEN="\e[42m"
-readonly COLOR_BG_DARK="\e[100m"
-
 func::easybash_msg() {
     case "$1" in
         "info")
@@ -42,8 +31,6 @@ func::easybash_msg() {
         ;;
     esac
 }
-
-
 
 func::easybash_welcome() {
     clear
@@ -119,14 +106,6 @@ func::component_welcome() {
             echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_|    "
             echo "                                                         ${2}"
         ;;
-        "redis")
-            echo "  ____               _   _            "      
-            echo " |  _ \    ___    __| | (_)  ___      "
-            echo " | |_) |  / _ \  / _  | | | / __|     "
-            echo " |  _ <  |  __/ | (_| | | | \__ \     "
-            echo " |_| \_\  \___|  \__,_| |_| |___/     "
-            echo "                                 ${2} "
-        ;;
         "apache")
             echo "      _                             _                 "
             echo "     / \     _ __     __ _    ___  | |__     ___      "
@@ -142,55 +121,6 @@ func::component_welcome() {
             echo " | |  | | | |_| |  ___) | | |_| | | |___      "
             echo " |_|  |_|  \__, | |____/   \__\_\ |_____|     "
             echo "           |___/                         ${2}";
-        ;;
-        "golang")
-            echo "    ____    ___      "
-            echo "   / ___|  / _ \     "
-            echo "  | |  _  | | | |    "
-            echo "  | |_| | | |_| |    "
-            echo "   \____|  \___/     "
-            echo "                 ${2}"
-        ;;
-        "nodejs")
-            echo "  _   _               _                _          "
-            echo " | \ | |   ___     __| |   ___        (_)  ___    "
-            echo " |  \| |  / _ \   / _\` |  / _ \       | | / __|  "
-            echo " | |\  | | (_) | | (_| | |  __/  _    | | \__ \   "
-            echo " |_| \_|  \___/   \__,_|  \___| (_)  _/ | |___/   "
-            echo "                                    |__/          "
-            echo "                                              ${2}"
-        ;;
-        "dart")
-            echo "   ____                   _       "
-            echo "  |  _ \    __ _   _ __  | |_     "
-            echo "  | | | |  / _\` | | '__| | __|   "
-            echo "  | |_| | | (_| | | |    | |_     "
-            echo "  |____/   \__,_| |_|     \__|    "
-            echo "                              ${2}"
-        ;;
-        "postfix")
-            echo " ____                   _      __   _           "
-            echo " |  _ \    ___    ___  | |_   / _| (_) __  __   "
-            echo " | |_) |  / _ \  / __| | __| | |_  | | \ \/ /   "
-            echo " |  __/  | (_) | \__ \ | |_  |  _| | |  >  <    "
-            echo " |_|      \___/  |___/  \__| |_|   |_| /_/\_\   "
-            echo "                                            ${2}"
-        ;;
-        "tomcat")
-            echo " _____                                      _      "
-            echo "|_   _|   ___    _ __ ___     ___    __ _  | |_    "
-            echo "  | |    / _ \  | '_ \` _ \   / __|  / _\` | | __| "
-            echo "  | |   | (_) | | | | | | | | (__  | (_| | | |_    "
-            echo "  |_|    \___/  |_| |_| |_|  \___|  \__,_|  \__|   "
-            echo "                                               ${2}"
-        ;;
-        "java")
-            echo "      _                             "
-            echo "     | |   __ _  __   __   __ _     "
-            echo "  _  | |  / _\` | \ \ / /  / _\` |  "
-            echo " | |_| | | (_| |  \ V /  | (_| |    "
-            echo "  \___/   \__,_|   \_/    \__,_|    "
-            echo "                                ${2}"
         ;;
     esac
 

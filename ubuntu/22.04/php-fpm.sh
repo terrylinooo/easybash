@@ -21,8 +21,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./php-fpm.sh -v 7.2
-#-    $ ./php-fpm.sh --version=7.2
+#-    $ ./php-fpm.sh -v 8.2
+#-    $ ./php-fpm.sh --version=8.2
 #-    $ ./php-fpm.sh
 #+
 #+ IMPLEMENTATION:
@@ -40,7 +40,7 @@
 
 # Display package information, no need to change.
 os_name="Ubuntu"
-os_version="20.04"
+os_version="22.04"
 package_name="PHP-FPM"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
@@ -219,7 +219,7 @@ case  ${package_version} in
     "8.2") ;;
     *)
         func::easybash_msg warning "Invalid PHP version: ${package_version} is not supported."
-        func::easybash_msg info "Try \"5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2\" (recommended version: 7.4)."
+        func::easybash_msg info "Try \"5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2\" (recommended version: 8.1)."
         exit 1
         ;;
 esac

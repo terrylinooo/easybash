@@ -4,12 +4,12 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
   config.vm.box_check_update = false
-  config.vm.network "private_network", ip: "192.168.95.18"
+  config.vm.network "private_network", ip: "192.168.18.4"
   config.vm.boot_timeout = 600
-  config.vm.synced_folder "../../../easybash", "/data"
+  config.vm.synced_folder "./", "/easybash_dev"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
-    vb.name = "test_ubuntu_bionic64"
+    vb.name = "easybash_dev_ubuntu_bionic64"
   end
   config.vm.provision "shell", inline: <<-SHELL
     export LS_COLORS="ow=01;30;104"

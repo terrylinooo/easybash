@@ -47,16 +47,17 @@ package_name="PHP-FPM"
 _PM="apt-get"
 
 # Only allow 5.6, 7.0, 7,1, 7.2, 7.3, 7.4
-package_version="7.4"
+package_version="8.2"
 
 php_modules=(
-    "bcmath"    "bz2"         "cgi"          "cli"         "common" 
-    "curl"      "dba"         "dev"          "enchant"     "gd"       
-    "gmp"       "imap"        "interbase"    "intl"        "json"
-    "ldap"      "mbstring"    "mysql"        "odbc"        "opcache"  
-    "pgsql"     "phpdbg"      "pspell"       "readline"    "recode"   
-    "redis"     "snmp"        "soap"         "sqlite3"     "sybase" 
-    "tidy"      "xml"         "xmlrpc"       "xsl"         "zip" 
+    "bcmath"    "bz2"         "cgi"         "cli"          "common"  
+    "curl"      "dba"         "dev"         "enchant"      "gd"  
+    "gmp"       "imap"        "imagick"     "interbase"    "intl"  
+    "json"      "ldap"        "mbstring"    "memcached"    "mongodb"  
+    "mysql"     "odbc"        "opcache"     "pgsql"        "phpdbg"  
+    "pspell"    "readline"    "recode"      "redis"        "snmp"  
+    "soap"      "sqlite3"     "sybase"      "tidy"         "xdebug"  
+    "xml"       "xmlrpc"      "xsl"         "zip"
 )
 
 # Default
@@ -214,9 +215,11 @@ case  ${package_version} in
     "7.3") ;;
     "7.4") ;;
     "8.0") ;;
+    "8.1") ;;
+    "8.2") ;;
     *)
         func::easybash_msg warning "Invalid PHP version: ${package_version} is not supported."
-        func::easybash_msg info "Try \"5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0\" (recommended version: 7.4)."
+        func::easybash_msg info "Try \"5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2\" (recommended version: 8.1)."
         exit 1
         ;;
 esac

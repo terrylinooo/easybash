@@ -168,7 +168,7 @@ fi
 
 # Not loaded by easybash.sh, and mysql_root_password not set.
 if [ -z "${mysql_root_password+x}" ]; then
-    mysql_root_password="proviscript"
+    mysql_root_password="easybash"
 fi
 
 if [ -z "${mysql_secure+x}" ]; then
@@ -181,11 +181,11 @@ fi
 
 # The following variables are not needed when mysql_remote="n"
 if [ -z "${mysql_remote_user+x}" ]; then
-    mysql_remote_user="proviscript"
+    mysql_remote_user="easybash"
 fi
 
 if [ -z "${mysql_remote_password+x}" ]; then
-    mysql_remote_password="proviscript"
+    mysql_remote_password="easybash"
 fi
 
 #==============================================================================
@@ -279,9 +279,9 @@ fi
 
 # Add repository for MariaDB
 if [ "${package_version}" == "latest" ]; then
-    version_code="10.4"
+    version_code="10.11.2"
 elif [ "${package_version}" == "mainline" ]; then
-    version_code="10.5"
+    version_code="11.0.1"
 elif [ "${package_version}" == "system" ]; then
     version_code="10.0"
 fi

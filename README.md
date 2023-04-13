@@ -1,12 +1,17 @@
 # ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easy bash for Ubuntu
 
-Easybash is to do fully automatic installation of the most popular and useful packages to their **latest version** on Ubuntu servers.
+Seeking a solution for easy deployment of a new Ubuntu machine with LAMP or LEMP stacks? Here it is.
 
-Easybash has been tested and can use on the following LTS versions.
+Easybash is a tool for fully automatic installation of the most popular and useful packages to their latest versions on Ubuntu servers.
+
+### Supported Ubuntu Versions
+
+Easybash has been tested and can be used on the following LTS versions.
 
 - [Ubuntu 16.04 (Xenial Xerus)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/16.04)
 - [Ubuntu 18.04 (Bionic Beaver)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/18.04)
 - [Ubuntu 20.04 (Focal Fossa)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/20.04)
+- [Ubuntu 22.04 (Jammy Jellyfish)](https://github.com/terrylinooo/easybash/tree/master/ubuntu/22.04)
 
 ## :link: [Website](https://easybash.github.io/) :link:
 
@@ -16,24 +21,25 @@ Easybash has been tested and can use on the following LTS versions.
 
 | Package | Category |
 | --- | --- |
-| Apache | web server |
-| Dart | programming language |
-| Golang | programming language |
-| MairaDB | database |
-| MySQL | database |
-| Node.js  | programming language |
-| Nginx | web server |
-| PHP-FPM | programming language |
-| Redis | database |
+| Apache | A |
+| Nginx | E |
+| MairaDB | M |
+| MySQL | M |
+| PHP-FPM | P |
+
+### MySQL Secure Installation
+
+Easybash also does what the `secure_mysql_installation` shell script does. Please check out the examples in the MySQL/MariaDB section.
 
 ## How to Use
 
 - Wizard
 - Standalone
 
----
 
 ### Wizard Mode 
+
+Wizard mode installs the entire LAMP or LEMP stack according to the config.yml configuration file.
 
 #### Download
 ```
@@ -61,6 +67,8 @@ That's it. Easybash will install packages which defined in `install` section in 
 
 ### Standalone Mode
 
+Standalone mode uses the bash command set of the package directly for installation, installing one package service at a time.
+
 #### Nginx
 
 Download
@@ -70,6 +78,10 @@ Download
 wget https://easybash.github.io/ubuntu/16.04/nginx.sh
 # Ubuntu 18.04 LTS
 wget https://easybash.github.io/ubuntu/18.04/nginx.sh
+# Ubuntu 20.04 LTS
+wget https://easybash.github.io/ubuntu/20.04/nginx.sh
+# Ubuntu 22.04 LTS
+wget https://easybash.github.io/ubuntu/22.04/nginx.sh
 ```
 
 Options
@@ -105,6 +117,10 @@ Download
 wget https://easybash.github.io/ubuntu/16.04/mariadb.sh
 # Ubuntu 18.04 LTS
 wget https://easybash.github.io/ubuntu/18.04/mariadb.sh
+# Ubuntu 20.04 LTS
+wget https://easybash.github.io/ubuntu/20.04/mariadb.sh
+# Ubuntu 22.04 LTS
+wget https://easybash.github.io/ubuntu/22.04/mariadb.sh
 ```
 
 Options
@@ -146,6 +162,10 @@ Download
 wget https://easybash.github.io/ubuntu/16.04/mysql.sh
 # Ubuntu 18.04 LTS
 wget https://easybash.github.io/ubuntu/18.04/mysql.sh
+# Ubuntu 20.04 LTS
+wget https://easybash.github.io/ubuntu/20.04/mysql.sh
+# Ubuntu 22.04 LTS
+wget https://easybash.github.io/ubuntu/22.04/mysql.sh
 ```
 
 Options
@@ -187,6 +207,10 @@ Download
 wget https://easybash.github.io/ubuntu/16.04/php-fpm.sh
 # Ubuntu 18.04 LTS
 wget https://easybash.github.io/ubuntu/18.04/php-fpm.sh
+# Ubuntu 20.04 LTS
+wget https://easybash.github.io/ubuntu/20.04/php-fpm.sh
+# Ubuntu 22.04 LTS
+wget https://easybash.github.io/ubuntu/22.04/php-fpm.sh
 ```
 
 Options
@@ -223,7 +247,11 @@ Download
 # Ubuntu 16.04 LTS
 wget https://easybash.github.io/ubuntu/16.04/apache.sh
 # Ubuntu 18.04 LTS
-wget https://easybash.github.io/ubuntu/18.04/apache.sh 
+wget https://easybash.github.io/ubuntu/18.04/apache.sh
+# Ubuntu 20.04 LTS
+wget https://easybash.github.io/ubuntu/20.04/apache.sh 
+# Ubuntu 22.04 LTS
+wget https://easybash.github.io/ubuntu/22.04/apache.sh 
 ```
 Options
 ```
@@ -247,137 +275,9 @@ Options
 
 ```
 
-#### Redis
-
-Download
-```shell
-# Ubuntu 16.04 LTS
-wget https://easybash.github.io/ubuntu/16.04/redis.sh
-# Ubuntu 18.04 LTS
-wget https://easybash.github.io/ubuntu/18.04/redis.sh
-```
-Options
-```
- SYNOPSIS
-
-    redis.sh [-h] [-i] [-v [version]]
-
- OPTIONS
-
-    -v ?, --version=?    Which version of Redis you want to install?
-                         Accept vaule: latest
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-    --aptitude           Use aptitude instead of apt-get as package manager
-
- EXAMPLES
-
-    $ ./redis.sh -v latest
-    $ ./redis.sh --version=latest
-    $ ./redis.sh
-
-```
-
-#### Golang
-
-Download
-```shell
-# Ubuntu 16.04 LTS
-wget https://easybash.github.io/ubuntu/16.04/redis.sh
-# Ubuntu 18.04 LTS
-wget https://easybash.github.io/ubuntu/18.04/redis.sh
-```
-Options
-```
- SYNOPSIS
-
-    golang.sh [-h] [-i] [-v [version]]
-
- OPTIONS
-
-    -v ?, --version=?    Which version of Go you want to install?
-                         Accept vaule: latest, system
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-    --aptitude           Use aptitude instead of apt-get as package manager
-
- EXAMPLES
-
-    $ ./golang.sh -v system
-    $ ./golang.sh --version=latest
-    $ ./golang.sh
-
-```
-
-#### Node.js
-
-Download
-```shell
-# Ubuntu 16.04 LTS
-wget https://easybash.github.io/ubuntu/16.04/nodejs.sh
-# Ubuntu 18.04 LTS
-wget https://easybash.github.io/ubuntu/18.04/nodejs.sh
-```
-Options
-```
- SYNOPSIS
-
-    nodejs.sh [-h] [-i] [-v [version]]
-
- OPTIONS
-
-    -v ?, --version=?    Which version of Node.js you want to install?
-                         Accept vaule: latest (stable), mainline, system
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-    --aptitude           Use aptitude instead of apt-get as package manager
-
- EXAMPLES
-
-    $ ./nodejs.sh -v system
-    $ ./nodejs.sh --version=latest
-    $ ./nodejs.sh
-
-```
-
-#### Dart
-
-Download
-```shell
-# Ubuntu 16.04 LTS
-wget https://easybash.github.io/ubuntu/16.04/dart.sh
-# Ubuntu 18.04 LTS
-wget https://easybash.github.io/ubuntu/18.04/dart.sh
-```
-Options
-```
- SYNOPSIS
-
-    dart.sh [-h] [-i] [-v [version]]
-
- OPTIONS
-
-    -v ?, --version=?    Which version of Dart you want to install?
-                         Accept vaule: latest, dev. 
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-    --aptitude           Use aptitude instead of apt-get as package manager
-
- EXAMPLES
-
-    $ ./dart.sh -v latest
-    $ ./dart.sh --version=latest
-    $ ./dart.sh
-
-```
-
-More bash scripts will be added..
-
----
-
 ### Install a package
 
-Let's take MariaDB as an example.
+Let's take a look at MariaDB as an example.
 
 ```shell
 wget https://easybash.github.io/ubuntu/16.04/mariadb.sh
@@ -389,7 +289,7 @@ chmod 755 ./mariadb.sh
 
 ### Vargrant Provisioning
 
-You can use EasyBash's CDN to quickly provision your Vagrant machine.
+You can use the files hosted on [GitHub page](https://github.com/easybash/easybash.github.io) to quickly provision your Vagrant machine.
 
 ```shell
 Vagrant.configure("2") do |config|
@@ -422,10 +322,23 @@ end
 
 ## Contributing Code
 
-1. Fork a repo from master branch.
-2. Use the coding style outlined in the [bash coding style guide](https://github.com/easybash/bash-coding-style-guide).
-3. Make pull requests to the development branch.
-4. After code is being reviewed, the code will be merged to the master. Everything on master will be part of the next major release.
+Ensure that the changes have been thoroughly tested on the corresponding system version. Use the following Vagrant file to create a development environment for testing.
+
+### Vagrant Files
+
+| Path |  Ubuntu version   |
+| --- | --- |
+| ubuntu/16.04/Vagrantfile | 16.04 |
+| ubuntu/18.04/Vagrantfile | 18.04 |
+| ubuntu/20.04/Vagrantfile | 20.04 |
+| ubuntu/22.04/Vagrantfile | 22.04 |
+
+### Steps
+
+- Fork a repository from the master branch.
+- Use the coding style outlined in the [Bash coding style guide](https://github.com/easybash/bash-coding-style-guide).
+- Submit a pull request to the development branch.
+- After the code has been reviewed, it will be merged into the master branch. Everything on the master branch will be included in the next major release.
 
 ## Authors
 

@@ -168,7 +168,7 @@ fi
 
 # Not loaded by easybash.sh, and mysql_root_password not set.
 if [ -z "${mysql_root_password+x}" ]; then
-    mysql_root_password="proviscript"
+    mysql_root_password="easybash"
 fi
 
 if [ -z "${mysql_secure+x}" ]; then
@@ -181,11 +181,11 @@ fi
 
 # The following variables are not needed when mysql_remote="n"
 if [ -z "${mysql_remote_user+x}" ]; then
-    mysql_remote_user="proviscript"
+    mysql_remote_user="easybash"
 fi
 
 if [ -z "${mysql_remote_password+x}" ]; then
-    mysql_remote_password="proviscript"
+    mysql_remote_password="easybash"
 fi
 
 #==============================================================================
@@ -295,9 +295,9 @@ if [ "${package_version}" == "latest" ]; then
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/tools-component string mysql-tools"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/dmr-warning note"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/preview-component string"
-    wget https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
-    sudo -E dpkg -i mysql-apt-config_0.8.15-1_all.deb
-    rm mysql-apt-config_0.8.15-1_all.deb
+    wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+    sudo -E dpkg -i mysql-apt-config_0.8.24-1_all.deb
+    rm mysql-apt-config_0.8.24-1_all.deb
 
     # Update repository for MySQL. 
     sudo ${_PM} update

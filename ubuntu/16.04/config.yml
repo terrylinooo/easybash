@@ -12,14 +12,10 @@
 
 install:
 #   - apache
-#   - dart
-#   - golang
     - mariadb
 #   - mysql
     - nginx
-#   - nodejs
     - php
-    - redis
 
 config:
     #--------------------------------#
@@ -31,30 +27,12 @@ config:
     apache:
         name: apache
         version: latest
-    #-----------------------------------#
-    # Dart                              #
-    #-----------------+-----------------#
-    # version         | latest: 2.7.2   #
-    #                 | mainline: 2.9.0 #
-    #-----------------+-----------------#
-    dart:
-        name: dart
-        version: latest
-    #----------------------------------#
-    # Golang                           #
-    #-----------------+----------------#
-    # version         | latest: 1.13.4 #
-    #                 | system: 1.6.2  #
-    #-----------------+----------------#
-    golang:
-        name: golang
-        version: latest
     #------------------------------------#
     # MariaDB                            #
     #-----------------+------------------#
-    # version         | latest: 10.4.12  #
+    # version         | latest: 10.11.2  #
     #                 | system: 10.0.38  #
-    #                 | mainline: 10.5.2 #
+    #                 | mainline: 11.0.1 #
     # password        | *                #
     # secure          | y, n             #
     # remote          | y, n             #
@@ -72,8 +50,8 @@ config:
     #----------------------------------#
     # MySQL                            #
     #-----------------+----------------#
-    # version         | latest: 8.0.19 #
-    #                 | system: 5.7.29 #
+    # version         | latest: 8.0.25 #
+    #                 | system: 5.7.33 #
     # password        | *              #
     # secure          | y, n           #
     # remote          | y, n           #
@@ -91,32 +69,22 @@ config:
     #--------------------------------#
     # Nginx                          #
     #---------+----------------------#
-    # version | latest: 1.18.0       #
-    #         | mainline: 1.19.0     #
+    # version | latest: 1.24.0       #
+    #         | mainline: 1.23.4     #
     #         | system: 1.10.3       #
     #---------+----------------------#
     nginx:
         name: nginx
         version: latest
-    #------------------------------------#
-    # Nodejs                             #
-    #-----------------+------------------#
-    # version         | latest: 12.16.2  #
-    #                 | mainline: 14.0.0 #
-    #                 | system: 4.2.6    #
-    #-----------------+------------------#
-    nodejs:
-        name: nodejs
-        version: latest
     #--------------------------------#
     # PHP-FPM                        #
     #---------+----------------------#
-    # version | 5.6, 7.0-7.4, 8.0    #
+    # version | 5.6 - 8.2            #
     # modules | see list             #
     #---------+----------------------#
     php:
         name: "php-fpm"
-        version: 7.4
+        version: 8.2
         modules:
             - bcmath
             - bz2
@@ -128,13 +96,16 @@ config:
             - dev
             - enchant
             - gd
-            - gmp
+            - mp
             - imap
+            - imagick
             - interbase
             - intl
             - json
             - ldap
             - mbstring
+            - memcached
+            - mongodb
             - mysql
             - odbc
             - opcache
@@ -149,16 +120,8 @@ config:
             - sqlite3
             - sybase
             - tidy
+            - xdebug
             - xml
             - xmlrpc
             - xsl
             - zip
-    #--------------------------------#
-    # Redis                          #
-    #---------+----------------------#
-    # version | latest: 5.0.8        #
-    #         | system: 3.0.6        #
-    #---------+----------------------#
-    redis:
-        name: redis
-        version: latest

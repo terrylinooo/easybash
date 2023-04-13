@@ -40,7 +40,9 @@
 /ubuntu/16.04/Vagrantfile
 /ubuntu/18.04/Vagrantfile
 /ubuntu/20.04/Vagrantfile
+/Vagrantfile
 
 /config.yml
+.vagrant
 
 !.gitignore

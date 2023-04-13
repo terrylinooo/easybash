@@ -2,8 +2,8 @@
 # config.yml
 #
 # @package Easybash
-# @system  Ubuntu 20.04 (Focal)
-# @date    2021/04/22
+# @system  Ubuntu 22.04 (Jammy)
+# @date    2023/04/12
 #
 # After completing the following setting, run:
 #
@@ -31,7 +31,7 @@ config:
     # MariaDB                            #
     #-----------------+------------------#
     # version         | latest: 10.11.2  #
-    #                 | system: 10.3.38  #
+    #                 | system: 10.6.12  #
     #                 | mainline: 11.0.1 #
     # password        | *                #
     # secure          | y, n             #
@@ -71,7 +71,7 @@ config:
     #---------+----------------------#
     # version | latest: 1.24.0       #
     #         | mainline: 1.23.4     #
-    #         | system: 1.17.10      #
+    #         | system: 1.18.10      #
     #---------+----------------------#
     nginx:
         name: nginx

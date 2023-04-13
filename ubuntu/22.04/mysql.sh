@@ -24,7 +24,7 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mysql.sh -v latest -s y -r y -u test_user -p 12345678
+#-    $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
 #-    $ ./mysql.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
@@ -42,7 +42,7 @@
 
 # Display package information, no need to change.
 os_name="Ubuntu"
-os_version="16.04"
+os_version="22.04"
 package_name="MySQL"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
@@ -284,7 +284,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # Add repository for MySQL
 if [ "${package_version}" == "latest" ]; then
-    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename select xenial"
+    sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename select jammy"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-distro select ubuntu"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-url string http://repo.mysql.com/apt"
     sudo debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-preview select Disabled"
@@ -367,7 +367,7 @@ fi
 
 mysql_version="$(mysql -V 2>&1)"
 
-if [[ "${mysql_version}" = *"MySQL"* && "${mysql_version}" != *"command not found"* ]]; then
+if [[ "${mysql_version,,}" = *"mysql"* && "${mysql_version,,}" != *"command not found"* ]]; then
     func::easybash_msg success "Installation process is completed."
     func::easybash_msg success "$(mysql -V 2>&1)"
 else
