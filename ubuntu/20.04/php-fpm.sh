@@ -148,7 +148,7 @@ fi
 
 if [ "$(type -t INIT_EASYBASH)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    php_modules=${PHP_MODULES}
+    php_modules=("${PHP_MODULES[@]}")
     func::component_welcome "php-fpm" "${package_version}"
 else
     # Bash color set

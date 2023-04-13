@@ -34,12 +34,26 @@ Easybash also does what the `secure_mysql_installation` shell script does. Pleas
 ## How to Use
 
 - Wizard
+- Config
 - Standalone
 
+### Wizard Mode
 
-### Wizard Mode 
+![](https://i.imgur.com/42dErDQ.gif)
+Wizard mode will ask you several questions to configure settings and then proceed to install the LEMP or LAMP stacks.
 
-Wizard mode installs the entire LAMP or LEMP stack according to the config.yml configuration file.
+#### Download and Run
+```
+wget https://easybash.github.io/easybash.tar.gz
+tar -zxvf easybash.tar.gz
+cd easybash-latest
+./easybash.sh
+```
+
+
+### Config Mode 
+
+Config mode installs the entire LAMP or LEMP stack according to the config.yml configuration file.
 
 #### Download
 ```

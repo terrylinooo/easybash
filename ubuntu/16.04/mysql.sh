@@ -373,4 +373,3 @@ if [[ "${mysql_version}" = *"MySQL"* && "${mysql_version}" != *"command not foun
 else
     func::easybash_msg warning "Installation process is failed."
 fi
-

@@ -379,4 +379,3 @@ if [[ "${mysql_version}" = *"MariaDB"* && "${mysql_version}" != *"command not fo
 else
     func::easybash_msg warning "Installation process is failed."
 fi
-

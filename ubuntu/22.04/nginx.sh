@@ -43,7 +43,7 @@ package_name="Nginx"
 _PM="apt-get"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
-package_version="stable"
+package_version="latest"
 
 #==============================================================================
 # Part 2. Option (DO NOT MODIFY)

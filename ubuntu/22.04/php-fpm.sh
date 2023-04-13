@@ -148,7 +148,7 @@ fi
 
 if [ "$(type -t INIT_EASYBASH)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    php_modules=${PHP_MODULES}
+    php_modules=("${PHP_MODULES[@]}")
     func::component_welcome "php-fpm" "${package_version}"
 else
     # Bash color set
@@ -269,6 +269,8 @@ sudo ${_PM} install -y php-pear
 
 # Install PHP modules
 if [ "${install_modules}" == "ALL" ]; then
+    echo "========================"
+    echo ${php_modules}
     for module in ${php_modules[@]}; do
         func::easybash_msg info "Proceeding to install PHP module \"${module}\" ..."
         sudo ${_PM} install -y php${package_version}-${module}

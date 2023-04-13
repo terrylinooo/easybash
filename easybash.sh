@@ -177,11 +177,34 @@ if [ "${_EASYBASH}" == "false" ]; then
 
         # Question 9
         func::question_php_version
-        answer_php_version="$(func::answer_php_version)"
+        readonly STACK_PHP="$(func::answer_php_version)"
 
         # Question 10
         func::question_php_modules
-        readonly PHP_MODULES="$(func::answer_php_modules)"
+        answer_php_modules="$(func::answer_php_modules)"
+
+        if [ "${answer_php_modules}" == "1" ]; then
+            readonly PHP_MODULES=(
+                "bcmath"    "bz2"         "cgi"         "cli"          "common"  
+                "curl"      "dba"         "dev"         "enchant"      "gd"  
+                "gmp"       "imap"        "imagick"     "interbase"    "intl"  
+                "json"      "ldap"        "mbstring"    "memcached"    "mongodb"  
+                "mysql"     "odbc"        "opcache"     "pgsql"        "phpdbg"  
+                "pspell"    "readline"    "recode"      "redis"        "snmp"  
+                "soap"      "sqlite3"     "sybase"      "tidy"         "xdebug"  
+                "xml"       "xmlrpc"      "xsl"         "zip"
+            )
+        elif [ "${answer_php_modules}" == "2" ]; then     
+            readonly PHP_MODULES=(
+                "cgi"          "cli"        "common"    "curl"       "gd"  
+                "gmp"          "imagick"    "intl"      "json"       "mbstring"   
+                "memcached"    "mongodb"    "mysql"     "opcache"    "readline"      
+                "redis"        "sqlite3"    "tidy"      "xdebug"     "xml"              
+                "zip"
+            )
+        elif [ "${answer_php_modules}" == "3" ]; then
+            readonly PHP_MODULES=()
+        fi
 
         # Question 11
         func::question_confirmation
@@ -200,11 +223,12 @@ if [ "${_EASYBASH}" == "false" ]; then
             PACKAGE_VERSION="latest"
             source "${EASYBASH_DIR}/${OS_DIST,,}/${STACK_WEB_SERVER}.sh"
             source "${EASYBASH_DIR}/${OS_DIST,,}/${STACK_DATABASE}.sh"
-            PACKAGE_VERSION="${answer_php_version}"
+            PACKAGE_VERSION="${STACK_PHP}"
             source "${EASYBASH_DIR}/${OS_DIST,,}/php-fpm.sh"
         fi
 
         func::easybash_thanks
+        exit 0
 
     elif [ "${answer_installation_mode}" == "2" ]; then
        _INIT=true

@@ -39,7 +39,7 @@ func::question_perderred_stacks() {
     clear
     echo -e " ${COLOR_GREEN}Which stacks would you like to install?${COLOR_EOF}"
     echo -e " ${COLOR_WHITE}"
-    echo -e " (1) LEMP: Nginx, MariaDB or MySQL, PHP."
+    echo -e " (1) LEMP: Nginx, MariaDB or MySQL, PHP.\n"
     echo -e " (2) LAMP: Apache, MariaDB or MySQL, PHP."
     echo -e " ${COLOR_EOF}"
 }
@@ -57,7 +57,7 @@ func::question_perderred_db() {
     clear
     echo -e " ${COLOR_GREEN}Which database software would you like to install?${COLOR_EOF}"
     echo -e " ${COLOR_WHITE}"
-    echo -e " (1) MySQL"
+    echo -e " (1) MySQL\n"
     echo -e " (2) MariaDB"
     echo -e " ${COLOR_EOF}"
 }
@@ -95,7 +95,12 @@ func::answer_mysql_secure_installation() {
 # Question 5: Ask for MySQL roor password.
 func::question_mysql_root_password() {
     clear
-    echo -e " ${COLOR_GREEN}Please enter the password for root.${COLOR_EOF}\n"
+    echo -e " ${COLOR_GREEN}Please enter the password for root.${COLOR_EOF}"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " The password must be at least 8 characters long."
+    echo -e " MySQL recommends using passwords with at least 12 characters and a mix of"
+    echo -e " uppercase and lowercase letters, numbers, and special characters to ensure"
+    echo -e " security.\n"
 }
 
 func::answer_mysql_root_password() {
@@ -132,7 +137,12 @@ func::answer_mysql_remote_access() {
 func::question_mysql_remote_username() {
     clear
     echo -e " ${COLOR_GREEN}Please enter the username for remote access.${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN}The username must be a valid MySQL username.${COLOR_EOF}\n"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " The username must be a valid MySQL username."
+    echo -e "   * First char must be a letter"
+    echo -e "   * Up to 16 chars"
+    echo -e "   * Letters, numbers, and underscores only"
+    echo -e " ${COLOR_EOF}"
 }
 
 func::answer_mysql_remote_username() {
@@ -147,7 +157,12 @@ func::answer_mysql_remote_username() {
 # Question 8: Ask for MySQL remote access password.
 func::question_mysql_remote_password() {
     clear
-    echo -e " ${COLOR_GREEN}Please enter the password for the user that you just filled in.${COLOR_EOF}\n"
+    echo -e " ${COLOR_GREEN}Please enter the password for the remote user.${COLOR_EOF}"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " The password must be at least 8 characters long."
+    echo -e " MySQL recommends using passwords with at least 12 characters and a mix of"
+    echo -e " uppercase and lowercase letters, numbers, and special characters to ensure"
+    echo -e " security.\n"
 }
 
 func::answer_mysql_remote_password() {
@@ -163,7 +178,11 @@ func::answer_mysql_remote_password() {
 func::question_php_version() {
     clear
     echo -e " ${COLOR_GREEN}Which version of PHP you like to install?${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN}You can choose:${COLOR_WHITE} 5.6, 7.0, 7,1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2${COLOR_EOF}\n"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " You can choose: 5.6, 7.0, 7,1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2"
+    echo -e " I recommend installing the latest version of PHP to enjoy the latest"
+    echo -e " features, unless you have a specific reason to install an older version."
+    echo -e " ${COLOR_EOF}"
 }
 
 func::answer_php_version() {
@@ -210,21 +229,15 @@ func::question_confirmation() {
     echo -e " If you are ready, please type in ${COLOR_RED}yes${COLOR_GREEN} to get started."
     echo -e " ${COLOR_EOF}${COLOR_WHITE}"
     echo -e " Web server: ${STACK_WEB_SERVER}"
-    echo -e " Database: ${STACK_DATABASE}"
-    echo -e " PHP version: ${STACK_PHP}"
-    if [ "${PHP_MODULES}" == "1" ]; then
-        echo -e " PHP modules: All"
-    elif [ "${PHP_MODULES}" == "2" ]; then
-        echo -e " PHP modules: Most common uses"
-    else
-        echo -e " PHP modules: None"
-    fi
+    echo -e " DB: ${STACK_DATABASE}"
     echo -e " DB root password: ${MYSQL_ROOT_PASSWORD}"
     echo -e " DB remote access: ${MYSQL_REMOTE}"
     if [ "${MYSQL_REMOTE}" == "y" ]; then
         echo -e " DB remote username: ${MYSQL_REMOTE_USER}"
         echo -e " DB remote password: ${MYSQL_REMOTE_PASSWORD}"
     fi
+    echo -e " PHP version: ${STACK_PHP}"
+    echo -e " PHP modules: ${PHP_MODULES[@]}"
     echo -e " ${COLOR_EOF}"
 }
 
@@ -239,17 +252,18 @@ func::answer_confirmation() {
 # Question 12: Turn off restart dialog
 func::question_turn_off_restart_dialog() {
     clear
-    echo -e " ${COLOR_GREEN}Since Ubuntu 22, every time a new package is being installed,"
-    echo -e " it will ask you about '${COLOR_EOF}Which service should be restarted?${COLOR_GREEN}'"
-    echo -e " I can help you modify the ${COLOR_EOF}/etc/needrestart/needrestart.conf${COLOR_GREEN} file to turn it off."
-    echo -e " The following line will be uncommented and change it to '${COLOR_EOF}a${COLOR_GREEN}'${COLOR_EOF}"
-    echo -e " ${COLOR_BG_DARK}"
-    echo -e " #\$nrconf{restart} = 'i';${COLOR_EOF}"
-    echo -e " ${COLOR_GREEN}"
-    echo -e " And the following line will be uncommented.${COLOR_EOF}"
-    echo -e " ${COLOR_BG_DARK}"
-    echo -e " #\$nrconf{kernelhints} = -1;"
+    echo -e " ${COLOR_GREEN}Would you like to disable the annoying restart dialog?${COLOR_EOF}"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " Since Ubuntu 22, every time a new package is being installed,"
+    echo -e " it will ask you about \"${COLOR_BLUE}Which service should be restarted?${COLOR_WHITE}\""
+    echo -e " I can help you modify the ${COLOR_BG_DARK}/etc/needrestart/needrestart.conf${COLOR_EOF} file to turn it off."
+    echo -e " The following line will be uncommented and change it to \"${COLOR_RED}a${COLOR_WHITE}\""
     echo -e " ${COLOR_EOF}"
+    echo -e " ${COLOR_BG_DARK} #\$nrconf{restart} = 'i';${COLOR_EOF}"
+    echo -e " ${COLOR_WHITE}"
+    echo -e " And the following line will be uncommented."
+    echo -e " ${COLOR_EOF}"
+    echo -e " ${COLOR_BG_DARK} #\$nrconf{kernelhints} = -1;${COLOR_EOF}\n"
 }
 
 func::answer_turn_off_restart_dialog() {
