@@ -29,8 +29,8 @@
 # Part 1. Config
 #==============================================================================
 
-# Debian/Ubuntu Only. Package manager: apt-get | aptitude
-#_PM="apt-get"
+package_name="sphinsearch"
+package_version="3.5.1"
 
 #==============================================================================
 # Part 2. Option (DO NOT MODIFY)
@@ -125,6 +125,11 @@ echo -e " GitHub: https://github.com/terrylinooo/easybash"
 echo -e
 echo -e "${COLOR_BG_BLUE}${spaces}${COLOR_EOF}"
 echo -e ${COLOR_EOF}
+
+echo
+echo " @package: ${package_name}          "
+echo " @branch:  ${package_version}       "
+echo
 
 
 #==============================================================================
