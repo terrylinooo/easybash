@@ -1,6 +1,7 @@
 # ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png) Easy bash for Ubuntu
 
 ![](https://i.imgur.com/GcXUaF4.gif)
+
 :link: [Video Link](https://i.imgur.com/42dErDQ.mp4) :link:
 
 Seeking a solution for easy deployment of a new Ubuntu machine with **LAMP** or **LEMP** stacks? Here it is.
